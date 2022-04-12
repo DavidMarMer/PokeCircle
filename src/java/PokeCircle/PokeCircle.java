@@ -1,4 +1,4 @@
-package PokeCircle.java.PokeCircle;
+package PokeCircle.src.java.PokeCircle;
 
 public class PokeCircle {
     public static void main(String[] args) {
