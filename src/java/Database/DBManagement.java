@@ -56,6 +56,11 @@ public class DBManagement {
         return correct;
     }
 
+    /*Returns Connection object*/
+    public static Connection getConexion() {
+        return connection;
+    }
+
     /*Inserts into the database a new pokemon*/
     public static boolean insert(short number, String name, String type1, String type2, float weight, float height, String img) {
         boolean correct = true;
@@ -93,7 +98,7 @@ public class DBManagement {
                     + rs.getString("type2") + ";"
                     + rs.getFloat("weight") + ";"
                     + rs.getFloat("height") + ";"
-                    + rs.getString("img");
+                    + rs.getString("image");
             }
         } catch (SQLException sqle) {
             System.err.println("Unique select failed");
@@ -109,9 +114,8 @@ public class DBManagement {
         String pokemon = "";
         try {
             String command = "SELECT * FROM pokecircle.pokemon";
-            if (condition != null && !condition.isEmpty()) {
+            if (condition != null && !condition.isEmpty())
                 command += " WHERE " + condition;
-            }
             command += ";";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(command);
@@ -122,14 +126,32 @@ public class DBManagement {
                     + rs.getString("type2") + ";"
                     + rs.getFloat("weight") + ";"
                     + rs.getFloat("height") + ";"
-                    + rs.getString("img");
+                    + rs.getString("image");
                 pokemons.add(pokemon);
             }
         } catch (SQLException sqle) {
             System.err.println("General select failed");
+            sqle.printStackTrace();
             pokemons = null;
         }
         return pokemons;
+    }
+
+    /*Updates a pokemon*/
+    public static boolean update(short number, String name, String type1, String type2, float weight, float height, String img) {
+        boolean correct = true;
+        String command = "UPDATE pokecircle.pokemon SET name = '" + name + "', type1 = '"
+            + type1 + "', type2 = '" + type2 + "', weight = " + weight + ", height = "
+            + height + ", img = '" + img + "' WHERE number = " + number + ";";
+        try {
+            Statement st = connection.createStatement();
+            st.executeUpdate(command);
+            System.out.println("Pokemon updated");
+        } catch (SQLException sqle) {
+            System.err.println("Error updating the pokemon");
+            correct = false;
+        }
+        return correct;
     }
 
     /*Deletes a pokemon*/
@@ -145,28 +167,6 @@ public class DBManagement {
             correct = false;
         }
         return correct;
-    }
-
-    /*Updates a pokemon*/
-    public static boolean update(short number, String name, String type1, String type2, float weight, float height, String img) {
-        boolean correct = true;
-       String command = "UPDATE pokecircle.pokemon SET name = '" + name + "', type1 = '"
-                + type1 + "', type2 = '" + type2 + "', weight = " + weight + ", height = "
-                + height + ", img = '" + img + "' WHERE number = " + number + ";";
-        try {
-            Statement st = connection.createStatement();
-            st.executeUpdate(command);
-            System.out.println("Pokemon updated");
-        } catch (SQLException sqle) {
-            System.err.println("Error updating the pokemon");
-            correct = false;
-        }
-        return correct;
-    }
-
-    /*Returns Connection object*/
-    public static Connection getConexion() {
-        return connection;
     }
 
     /*Provisional*/
