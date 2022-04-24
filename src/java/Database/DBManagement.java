@@ -1,11 +1,16 @@
 package PokeCircle.src.java.Database;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez
@@ -16,17 +21,24 @@ public class DBManagement {
     private static Connection connection;
 
     /*Connects to database*/
-    public static boolean createConnection(String user, String password, String url, String classForName) {
+    public static boolean createConnection() {
         boolean correct = false;
+        Properties properties = new Properties();
         try {
-            Class.forName(classForName);
-            connection = (Connection) DriverManager.getConnection(url ,user, password);
+            properties.load(new FileReader("PokeCircle/resources/MySQL.properties"));
+            Class.forName(properties.getProperty("driver"));
+            properties.load(new FileReader("PokeCircle/resources/MySQL.properties".replace('/', File.separatorChar)));
+            connection = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("password"));
             System.out.println("Database connection successful");
             correct = true;
         } catch (ClassNotFoundException cnfe) {
             System.err.println("Driver not found");
         } catch (SQLException sqle) {
             System.err.println("Database connection failed");
+        } catch (FileNotFoundException fnfe) {
+            System.err.println("MySQL.properties not found");
+        } catch (IOException ioe) {
+            System.err.println("In/Out Error");
         }
         return correct;
     }
@@ -121,7 +133,7 @@ public class DBManagement {
     }
 
     /*Deletes a pokemon*/
-    public boolean delete(short number){
+    public static boolean delete(short number){
         boolean correct = true;
         String command = "DELETE FROM pokecircle.pokemon WHERE number = " + number + ";";
         try {
@@ -136,7 +148,7 @@ public class DBManagement {
     }
 
     /*Updates a pokemon*/
-    public boolean update(short number, String name, String type1, String type2, float weight, float height, String img) {
+    public static boolean update(short number, String name, String type1, String type2, float weight, float height, String img) {
         boolean correct = true;
        String command = "UPDATE pokecircle.pokemon SET name = '" + name + "', type1 = '"
                 + type1 + "', type2 = '" + type2 + "', weight = " + weight + ", height = "
@@ -159,6 +171,6 @@ public class DBManagement {
 
     /*Provisional*/
     public static void main(String[] args) {
-        createConnection("root", "", "jdbc:mysql://localhost:3306/pokecircle", "com.mysql.cj.jdbc.Driver");
+        createConnection();
     }
 }
