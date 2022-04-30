@@ -14,6 +14,7 @@ package PokeCircle.src.java.PokeCircle;
     private String type2;
     private float weight;
     private float height;
+    private String image;
     private short hp;
     private short attack;
     private short sp_attack;
@@ -22,6 +23,46 @@ package PokeCircle.src.java.PokeCircle;
     private short speed;
     private int likes;
     private boolean official;
+
+    /*Constructor with all attributes except likes and type2, because its can be null*/
+    public Pokemon(int number, String name, String type1, float weight, float height, String image,
+        short hp, short attack, short sp_attack, short defense, short sp_defense, short speed, boolean official) {
+        this.number = number;
+        this.name = name;
+        this.type1 = type1;
+        this.weight = weight;
+        this.height = height;
+        this.image = image;
+        this.hp = hp;
+        this.attack = attack;
+        this.sp_attack = sp_attack;
+        this.defense = defense;
+        this.sp_defense = sp_defense;
+        this.speed = speed;
+        this.official = official;
+    }
+
+    /*Constructor with all attributes*/
+    public Pokemon(int number, String name, String type1, String type2, float weight, float height, String image,
+        short hp, short attack, short sp_attack, short defense, short sp_defense, short speed, int likes, boolean official) {
+        this.number = number;
+        this.name = name;
+        this.type1 = type1;
+        this.type2 = type2;
+        this.weight = weight;
+        this.height = height;
+        this.image = image;
+        this.hp = hp;
+        this.attack = attack;
+        this.sp_attack = sp_attack;
+        this.defense = defense;
+        this.sp_defense = sp_defense;
+        this.speed = speed;
+        this.likes = likes;
+        this.official = official;
+    }
+
+    /*Getters*/
 
     public int getNumber() {
         return number;
@@ -45,6 +86,10 @@ package PokeCircle.src.java.PokeCircle;
 
     public float getHeight() {
         return height;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public short getHp() {
@@ -79,6 +124,8 @@ package PokeCircle.src.java.PokeCircle;
         return official;
     }
 
+    /*Setters*/
+
     public void setNumber(int number) {
         this.number = number;
     }
@@ -101,6 +148,10 @@ package PokeCircle.src.java.PokeCircle;
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setHp(short hp) {
