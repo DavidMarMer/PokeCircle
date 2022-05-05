@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import PokeCircle.src.java.PokeCircle.Pokemon;
+
 /**
  * Authors: David Martínez Merencio and María León Pérez
  */
@@ -62,18 +64,27 @@ public class DBManagement {
     }
 
     /*Inserts into the database a new pokemon*/
-    public static boolean insert(short number, String name, String type1, String type2, float weight, float height, String img) {
+    public static boolean insert(Pokemon pokemon) {
         boolean correct = true;
         try {
-            String command = "INSERT INTO pokecircle.pokemon VALUES ("
-                    + "" + number + ","
-                    + "'" + name + "',"
-                    + "'" + type1 + "',"
-                    + "'" + type2 + "',"
-                    + "" + weight + ","
-                    + "" + height + ","
-                    + "'" + img + "',"
-                    + ");";
+            String command = "INSERT INTO pokecircle.pokemon VALUES (" +
+                    pokemon.getNumber() + "," +
+                    "'" + pokemon.getName() + "'," +
+                    "'" + pokemon.getType1() + "'," +
+                    "'" + pokemon.getType2() + "'," +
+                    pokemon.getWeight() + "," +
+                    pokemon.getHeight() + "," +
+                    "'" + pokemon.getImage() + "'," +
+                    pokemon.getHp() + "," +
+                    pokemon.getAttack() + "," +
+                    pokemon.getSp_attack() + "," +
+                    pokemon.getDefense() + "," +
+                    pokemon.getSp_defense() + "," +
+                    pokemon.getSpeed() + "," +
+                    pokemon.getLikes() + "," +
+                    pokemon.isOfficial() + "," +
+                    "'" + pokemon.getAuthor() + "'" +
+                    ");";
             Statement st = connection.createStatement();
             st.executeUpdate(command);
         } catch (SQLException sqle) {
@@ -83,35 +94,29 @@ public class DBManagement {
         return correct;
     }
 
-    /*Returns only one row.
-    If and error happens, returns null. If no row is found, returns empty*/
-    public static String selectOne(short number) {
-        String pokemon = "";
+    /*Returns only one row*/
+    public static Pokemon selectOne(int number) {
+        Pokemon pokemon = null;
         String command = "SELECT * FROM pokecircle.pokemon WHERE number = " + number + ";";
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(command);
             if (rs.next()) {
-                pokemon = rs.getShort("number") + ";"
-                    + rs.getString("name") + ";"
-                    + rs.getString("type1") + ";"
-                    + rs.getString("type2") + ";"
-                    + rs.getFloat("weight") + ";"
-                    + rs.getFloat("height") + ";"
-                    + rs.getString("image");
+                pokemon = new Pokemon(rs.getShort("number"), rs.getString("name"), rs.getString("type1"), rs.getString("type2"),
+                    rs.getFloat("weight"), rs.getFloat("height"), rs.getString("image"), rs.getShort("hp"),
+                    rs.getShort("attack"), rs.getShort("sp_attack"), rs.getShort("defense"), rs.getShort("sp_defense"),
+                    rs.getShort("speed"), rs.getInt("likes"), rs.getBoolean("official"), rs.getString("author"));
             }
         } catch (SQLException sqle) {
             System.err.println("Unique select failed");
-            pokemon = null;
         }
         return pokemon;
     }
 
-    /*Returns an ArrayList with the pokemons found applying a condition.
-    If no condition is applied, it returns all pokemons. If and error happens, returns null. If no row is found, returns empty*/
-    public static ArrayList<String> select(String condition) {
-        ArrayList<String> pokemons = new ArrayList<String>();
-        String pokemon = "";
+    /*Returns an ArrayList with the pokemons found applying a condition. If no condition is applied, it returns all pokemons.*/
+    public static ArrayList<Pokemon> select(String condition) {
+        ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+        Pokemon pokemon = null;
         try {
             String command = "SELECT * FROM pokecircle.pokemon";
             if (condition != null && !condition.isEmpty())
@@ -120,29 +125,26 @@ public class DBManagement {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(command);
             while (rs.next()) {
-                pokemon = rs.getShort("number") + ";"
-                    + rs.getString("name") + ";"
-                    + rs.getString("type1") + ";"
-                    + rs.getString("type2") + ";"
-                    + rs.getFloat("weight") + ";"
-                    + rs.getFloat("height") + ";"
-                    + rs.getString("image");
+                pokemon = new Pokemon(rs.getShort("number"), rs.getString("name"), rs.getString("type1"), rs.getString("type2"),
+                    rs.getFloat("weight"), rs.getFloat("height"), rs.getString("image"), rs.getShort("hp"),
+                    rs.getShort("attack"), rs.getShort("sp_attack"), rs.getShort("defense"), rs.getShort("sp_defense"),
+                    rs.getShort("speed"), rs.getInt("likes"), rs.getBoolean("official"), rs.getString("author"));
                 pokemons.add(pokemon);
             }
         } catch (SQLException sqle) {
             System.err.println("General select failed");
-            sqle.printStackTrace();
-            pokemons = null;
         }
         return pokemons;
     }
 
     /*Updates a pokemon*/
-    public static boolean update(short number, String name, String type1, String type2, float weight, float height, String img) {
+    public static boolean update(Pokemon pokemon) {
         boolean correct = true;
-        String command = "UPDATE pokecircle.pokemon SET name = '" + name + "', type1 = '"
-            + type1 + "', type2 = '" + type2 + "', weight = " + weight + ", height = "
-            + height + ", img = '" + img + "' WHERE number = " + number + ";";
+        String command = "UPDATE pokecircle.pokemon SET name = '" + pokemon.getName() + "', type1 = '" + pokemon.getType1() + "', type2 = '" + pokemon.getType2() +
+        "', weight = " + pokemon.getWeight() + ", height = " + pokemon.getHeight() + ", image = '" + pokemon.getImage() + ", hp = " + pokemon.getHp() +
+        ", attack = " + pokemon.getAttack() + ", sp_attack = " + pokemon.getSp_attack() + ", defense = " + pokemon.getDefense() +
+        ", sp_defense = " + pokemon.getSp_defense() + ", speed = " + pokemon.getSpeed() + ", likes = " + pokemon.getLikes() + ", official = " + pokemon.isOfficial() +
+        ", author = " + pokemon.getAuthor() + "' WHERE number = " + pokemon.getNumber() + ";";
         try {
             Statement st = connection.createStatement();
             st.executeUpdate(command);
@@ -155,7 +157,7 @@ public class DBManagement {
     }
 
     /*Deletes a pokemon*/
-    public static boolean delete(short number){
+    public static boolean delete(int number){
         boolean correct = true;
         String command = "DELETE FROM pokecircle.pokemon WHERE number = " + number + ";";
         try {
@@ -167,10 +169,5 @@ public class DBManagement {
             correct = false;
         }
         return correct;
-    }
-
-    /*Provisional*/
-    public static void main(String[] args) {
-        createConnection();
     }
 }

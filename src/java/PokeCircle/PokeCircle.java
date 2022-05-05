@@ -11,30 +11,34 @@ import PokeCircle.src.java.Database.DBManagement;
 public class PokeCircle {
 
     /*Inserts a new pokemon into the PokeCircle database*/
-    public static boolean insert(short number, String name, String type1, String type2, float weight, float height, String img) {
-        return DBManagement.insert(number, name, type1, type2, weight, height, img);
+    public static boolean insert(String strPokemon) {
+        return DBManagement.insert(stringToPokemon(strPokemon));
     }
 
     /*Returns a List with all pokemons whose names match the first characters (namePart)*/
-    public static List<String> selectNames(String namePart) {
+    public static String selectNames(String namePart) {
         if (namePart == null)
             namePart = "";
-        return DBManagement.select("name LIKE '" + namePart + "%'");
+        return pokemonListToJson(DBManagement.select("name LIKE '" + namePart + "%'"));
+    }
+
+    public static String selectAuthor(String author) {
+        return pokemonListToJson(DBManagement.select("author LIKE '" + author + "%'"));
     }
 
     /*Selects all pokemons from PokeCircle database*/
-    public static List<String> selectAll() {
-        return DBManagement.select(null);
+    public static String selectAll() {
+        return pokemonListToJson(DBManagement.select(null));
     }
 
     /*Selects one pokemon from PokeCircle database*/
-    public static String selectOne(short number) {
-        return DBManagement.selectOne(number);
+    public static String selectOne(int number) {
+        return ((Pokemon)DBManagement.selectOne(number)).toString();
     }
 
     /*Updates a pokemon from PokeCircle database*/
-    public static boolean update(short number, String name, String type1, String type2, float weight, float height, String img) {
-        return DBManagement.update(number, name, type1, type2, weight, height, img);
+    public static boolean update(String strPokemon) {
+        return DBManagement.update(stringToPokemon(strPokemon));
     }
 
     /*Adss a like to a pokemon from PokeCircle database*/
@@ -47,13 +51,37 @@ public class PokeCircle {
         return DBManagement.delete(number);
     }
 
-    
+    /*Converts a String into a Pokemon*/
+    private static Pokemon stringToPokemon(String strPokemon) {
+        String[] attributesList = strPokemon.substring(strPokemon.indexOf("{"), strPokemon.indexOf("}")).split(",");
+        int number = Integer.parseInt(attributesList[0]);
+        String name = attributesList[1];
+        String type1 = attributesList[2];
+        String type2 = attributesList[3];
+        float weight = Float.parseFloat(attributesList[4]);
+        float height = Float.parseFloat(attributesList[5]);
+        String image = attributesList[6];
+        short hp = Short.parseShort(attributesList[7]);
+        short attack = Short.parseShort(attributesList[8]);
+        short sp_attack = Short.parseShort(attributesList[9]);
+        short defense = Short.parseShort(attributesList[10]);
+        short sp_defense = Short.parseShort(attributesList[11]);
+        short speed = Short.parseShort(attributesList[12]);
+        int likes = Integer.parseInt(attributesList[13]);
+        boolean official = Boolean.parseBoolean(attributesList[14]);
+        String author = attributesList[15];
 
-    /*Provisional*/
-    public static void main(String[] args) {
-        DBManagement.createConnection();
-        List<String> list = selectNames(null);
-        for (String cad : list)
-            System.out.println(cad);
+        //System.out.println(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, official, author).toString());
+        return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, official, author);
+    }
+
+    /*Converts a Pokemon into a json*/
+    private static String pokemonListToJson(List<Pokemon> pokemons) {
+        String json = "[";
+        for (Pokemon pokemon : pokemons) {
+            json += pokemon.toString();
+        }
+        json += "]";
+        return json;
     }
 }
