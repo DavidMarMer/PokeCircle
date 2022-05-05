@@ -6,8 +6,6 @@ package PokeCircle.src.java.PokeCircle;
 
  public class Pokemon {
 
-    /*PokeCircle database Pokemon attributes*/
-
     private int number;
     private String name;
     private String type1;
@@ -60,6 +58,22 @@ package PokeCircle.src.java.PokeCircle;
         this.speed = speed;
         this.likes = likes;
         this.official = official;
+    }
+
+    /*Tramsform a Pokemon into a String*/
+    @Override
+    public String toString() {
+        return "{" + number + "," + name + "," + type1 + "," + type2 + "," + weight + "," + height + "," + image + "," +
+            hp + "," + attack + "," + sp_attack + "," + defense + "," + sp_defense + "," + speed + "," + likes + "," + official + "}";
+    }
+
+    /*Provisional*/
+    public static void main(String[] args) {
+        // Pokemon p = new Pokemon(1, "Pikachu", "Electric", "Normal",1F, 1F, "foto",
+        //     (short)1, (short)1, (short)1, (short)1, (short)1, (short)1, 1, true);
+        Pokemon p = new Pokemon(1, "Pikachu", "Electric",1F, 1F, "foto",
+            (short)1, (short)1, (short)1, (short)1, (short)1, (short)1, true);
+        System.out.println(p.toString());
     }
 
     /*Getters*/

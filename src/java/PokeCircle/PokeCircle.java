@@ -8,8 +8,6 @@ import PokeCircle.src.java.Database.DBManagement;
  * Authors: David Martínez Merencio and María León Pérez
  */
 
-//I have to create a Pokemon class
-
 public class PokeCircle {
 
     /*Inserts a new pokemon into the PokeCircle database*/
