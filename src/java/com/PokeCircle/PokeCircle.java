@@ -1,8 +1,8 @@
-package PokeCircle.src.java.PokeCircle;
+package PokeCircle.src.java.com.PokeCircle;
 
 import java.util.List;
 
-import PokeCircle.src.java.Database.DBManagement;
+import PokeCircle.src.java.com.Database.DBManagement;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez

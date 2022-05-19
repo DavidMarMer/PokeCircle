@@ -1,10 +1,9 @@
-package PokeCircle.src.java.Database;
+package PokeCircle.src.java.com.Database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.rmi.StubNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import PokeCircle.src.java.PokeCircle.Pokemon;
+import PokeCircle.src.java.com.PokeCircle.Pokemon;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez
