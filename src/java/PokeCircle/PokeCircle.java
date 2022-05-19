@@ -10,6 +10,14 @@ import PokeCircle.src.java.Database.DBManagement;
 
 public class PokeCircle {
 
+    public static boolean createDatabaseConnection() {
+        return DBManagement.createConnection();
+    }
+
+    public static boolean closeDatabaseConnection() {
+        return DBManagement.closeConnection();
+    }
+
     /*Inserts a new pokemon into the PokeCircle database*/
     public static boolean insert(String strPokemon) {
         return DBManagement.insert(stringToPokemon(strPokemon));
@@ -53,7 +61,7 @@ public class PokeCircle {
 
     /*Converts a String into a Pokemon*/
     private static Pokemon stringToPokemon(String strPokemon) {
-        String[] attributesList = strPokemon.substring(strPokemon.indexOf("{"), strPokemon.indexOf("}")).split(",");
+        String[] attributesList = strPokemon.substring(strPokemon.indexOf("{")+1, strPokemon.indexOf("}")).split(",");
         int number = Integer.parseInt(attributesList[0]);
         String name = attributesList[1];
         String type1 = attributesList[2];
@@ -68,11 +76,10 @@ public class PokeCircle {
         short sp_defense = Short.parseShort(attributesList[11]);
         short speed = Short.parseShort(attributesList[12]);
         int likes = Integer.parseInt(attributesList[13]);
-        boolean official = Boolean.parseBoolean(attributesList[14]);
         String author = attributesList[15];
 
-        //System.out.println(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, official, author).toString());
-        return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, official, author);
+        //System.out.println(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author).toString());
+        return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author);
     }
 
     /*Converts a Pokemon into a json*/
@@ -83,5 +90,14 @@ public class PokeCircle {
         }
         json += "]";
         return json;
+    }
+
+    public static void main(String[] args) {
+        createDatabaseConnection();
+        String strPokemon = "{34,Nidoking,Poison,Ground,62,1.4,https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png,81,102,85,77,75,85,0,true,Nintendo}";
+        System.out.println("Insertando " + strPokemon);
+        if (insert(strPokemon)) {
+            System.out.println(strPokemon + " insertado correctamente");
+        }
     }
 }

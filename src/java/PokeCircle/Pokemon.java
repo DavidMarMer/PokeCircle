@@ -20,12 +20,11 @@ package PokeCircle.src.java.PokeCircle;
     private short sp_defense;
     private short speed;
     private int likes;
-    private boolean official;
     private String author;
 
     /*Constructor with all attributes except likes and type2, because its can be null*/
     public Pokemon(int number, String name, String type1, float weight, float height, String image, short hp,
-        short attack, short sp_attack, short defense, short sp_defense, short speed, boolean official, String author) {
+        short attack, short sp_attack, short defense, short sp_defense, short speed, String author) {
         this.number = number;
         this.name = name;
         this.type1 = type1;
@@ -38,13 +37,12 @@ package PokeCircle.src.java.PokeCircle;
         this.defense = defense;
         this.sp_defense = sp_defense;
         this.speed = speed;
-        this.official = official;
         this.author = author;
     }
 
     /*Constructor with all attributes*/
     public Pokemon(int number, String name, String type1, String type2, float weight, float height, String image, short hp,
-        short attack, short sp_attack, short defense, short sp_defense, short speed, int likes, boolean official, String author) {
+        short attack, short sp_attack, short defense, short sp_defense, short speed, int likes, String author) {
         this.number = number;
         this.name = name;
         this.type1 = type1;
@@ -59,7 +57,6 @@ package PokeCircle.src.java.PokeCircle;
         this.sp_defense = sp_defense;
         this.speed = speed;
         this.likes = likes;
-        this.official = official;
         this.author = author;
     }
 
@@ -67,7 +64,7 @@ package PokeCircle.src.java.PokeCircle;
     @Override
     public String toString() {
         return "{" + number + "," + name + "," + type1 + "," + type2 + "," + weight + "," + height + "," + image + "," + hp + "," +
-            attack + "," + sp_attack + "," + defense + "," + sp_defense + "," + speed + "," + likes + "," + official + "," + author + "}";
+            attack + "," + sp_attack + "," + defense + "," + sp_defense + "," + speed + "," + likes + "," + author + "}";
     }
 
     /*Getters*/
@@ -126,10 +123,6 @@ package PokeCircle.src.java.PokeCircle;
 
     public int getLikes() {
         return likes;
-    }
-
-    public boolean isOfficial() {
-        return official;
     }
 
     public String getAuthor() {
@@ -192,10 +185,6 @@ package PokeCircle.src.java.PokeCircle;
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public void setOfficial(boolean official) {
-        this.official = official;
     }
 
     public void setAuthor(String author) {

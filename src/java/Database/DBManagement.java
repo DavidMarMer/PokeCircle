@@ -82,7 +82,6 @@ public class DBManagement {
                     pokemon.getSp_defense() + "," +
                     pokemon.getSpeed() + "," +
                     pokemon.getLikes() + "," +
-                    pokemon.isOfficial() + "," +
                     "'" + pokemon.getAuthor() + "'" +
                     ");";
             Statement st = connection.createStatement();
@@ -105,7 +104,7 @@ public class DBManagement {
                 pokemon = new Pokemon(rs.getShort("number"), rs.getString("name"), rs.getString("type1"), rs.getString("type2"),
                     rs.getFloat("weight"), rs.getFloat("height"), rs.getString("image"), rs.getShort("hp"),
                     rs.getShort("attack"), rs.getShort("sp_attack"), rs.getShort("defense"), rs.getShort("sp_defense"),
-                    rs.getShort("speed"), rs.getInt("likes"), rs.getBoolean("official"), rs.getString("author"));
+                    rs.getShort("speed"), rs.getInt("likes"), rs.getString("author"));
             }
         } catch (SQLException sqle) {
             System.err.println("Unique select failed");
@@ -128,7 +127,7 @@ public class DBManagement {
                 pokemon = new Pokemon(rs.getShort("number"), rs.getString("name"), rs.getString("type1"), rs.getString("type2"),
                     rs.getFloat("weight"), rs.getFloat("height"), rs.getString("image"), rs.getShort("hp"),
                     rs.getShort("attack"), rs.getShort("sp_attack"), rs.getShort("defense"), rs.getShort("sp_defense"),
-                    rs.getShort("speed"), rs.getInt("likes"), rs.getBoolean("official"), rs.getString("author"));
+                    rs.getShort("speed"), rs.getInt("likes"), rs.getString("author"));
                 pokemons.add(pokemon);
             }
         } catch (SQLException sqle) {
@@ -143,7 +142,7 @@ public class DBManagement {
         String command = "UPDATE pokecircle.pokemon SET name = '" + pokemon.getName() + "', type1 = '" + pokemon.getType1() + "', type2 = '" + pokemon.getType2() +
         "', weight = " + pokemon.getWeight() + ", height = " + pokemon.getHeight() + ", image = '" + pokemon.getImage() + ", hp = " + pokemon.getHp() +
         ", attack = " + pokemon.getAttack() + ", sp_attack = " + pokemon.getSp_attack() + ", defense = " + pokemon.getDefense() +
-        ", sp_defense = " + pokemon.getSp_defense() + ", speed = " + pokemon.getSpeed() + ", likes = " + pokemon.getLikes() + ", official = " + pokemon.isOfficial() +
+        ", sp_defense = " + pokemon.getSp_defense() + ", speed = " + pokemon.getSpeed() + ", likes = " + pokemon.getLikes() +
         ", author = " + pokemon.getAuthor() + "' WHERE number = " + pokemon.getNumber() + ";";
         try {
             Statement st = connection.createStatement();
