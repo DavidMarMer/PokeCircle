@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.rmi.StubNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -87,7 +88,8 @@ public class DBManagement {
             Statement st = connection.createStatement();
             st.executeUpdate(command);
         } catch (SQLException sqle) {
-            System.err.println("Error inserting into the database");
+            System.err.println("Error inserting into the database:");
+            System.out.println(sqle.getMessage());
             correct = false;
         }
         return correct;
@@ -139,17 +141,22 @@ public class DBManagement {
     /*Updates a pokemon*/
     public static boolean update(Pokemon pokemon) {
         boolean correct = true;
-        String command = "UPDATE pokecircle.pokemon SET name = '" + pokemon.getName() + "', type1 = '" + pokemon.getType1() + "', type2 = '" + pokemon.getType2() +
-        "', weight = " + pokemon.getWeight() + ", height = " + pokemon.getHeight() + ", image = '" + pokemon.getImage() + ", hp = " + pokemon.getHp() +
-        ", attack = " + pokemon.getAttack() + ", sp_attack = " + pokemon.getSp_attack() + ", defense = " + pokemon.getDefense() +
-        ", sp_defense = " + pokemon.getSp_defense() + ", speed = " + pokemon.getSpeed() + ", likes = " + pokemon.getLikes() +
-        ", author = " + pokemon.getAuthor() + "' WHERE number = " + pokemon.getNumber() + ";";
-        try {
-            Statement st = connection.createStatement();
-            st.executeUpdate(command);
-            System.out.println("Pokemon updated");
-        } catch (SQLException sqle) {
-            System.err.println("Error updating the pokemon");
+        if (selectOne(pokemon.getNumber()) != null) {
+            String command = "UPDATE pokecircle.pokemon SET name = '" + pokemon.getName() + "', type1 = '" + pokemon.getType1() + "', type2 = '" + pokemon.getType2() +
+            "', weight = " + pokemon.getWeight() + ", height = " + pokemon.getHeight() + ", image = '" + pokemon.getImage() + "', hp = " + pokemon.getHp() +
+            ", attack = " + pokemon.getAttack() + ", sp_attack = " + pokemon.getSp_attack() + ", defense = " + pokemon.getDefense() +
+            ", sp_defense = " + pokemon.getSp_defense() + ", speed = " + pokemon.getSpeed() + ", likes = " + pokemon.getLikes() +
+            ", author = '" + pokemon.getAuthor() + "' WHERE number = " + pokemon.getNumber() + ";";
+            try {
+                Statement st = connection.createStatement();
+                st.executeUpdate(command);
+                System.out.println("Pokemon updated");
+            } catch (SQLException sqle) {
+                System.err.println("Error updating the pokemon");
+                correct = false;
+            }
+        } else {
+            System.err.println("Error updating the pokemon, it doesn't exist");
             correct = false;
         }
         return correct;
@@ -158,13 +165,18 @@ public class DBManagement {
     /*Deletes a pokemon*/
     public static boolean delete(int number){
         boolean correct = true;
-        String command = "DELETE FROM pokecircle.pokemon WHERE number = " + number + ";";
-        try {
-            Statement st = connection.createStatement();
-            st.executeUpdate(command);
-            System.out.println("Pokemon deleted");
-        } catch (SQLException ex) {
-            System.err.println("Error deleting the pokemon");
+        if (selectOne(number) != null) {
+            String command = "DELETE FROM pokecircle.pokemon WHERE number = " + number + ";";
+            try {
+                Statement st = connection.createStatement();
+                st.executeUpdate(command);
+                System.out.println("Pokemon deleted");
+            } catch (SQLException sqle) {
+                System.err.println("Error deleting the pokemon");
+                correct = false;
+            }
+        } else {
+            System.err.println("Error deleting the pokemon, it doesn't exist");
             correct = false;
         }
         return correct;

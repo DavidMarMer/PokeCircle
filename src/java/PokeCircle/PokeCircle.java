@@ -10,10 +10,12 @@ import PokeCircle.src.java.Database.DBManagement;
 
 public class PokeCircle {
 
+    /*Connects to database*/
     public static boolean createDatabaseConnection() {
         return DBManagement.createConnection();
     }
 
+    /*Disconnects from database*/
     public static boolean closeDatabaseConnection() {
         return DBManagement.closeConnection();
     }
@@ -23,15 +25,16 @@ public class PokeCircle {
         return DBManagement.insert(stringToPokemon(strPokemon));
     }
 
-    /*Returns a List with all pokemons whose names match the first characters (namePart)*/
-    public static String selectNames(String namePart) {
+    /*Returns a json with all pokemons whose names match the first characters (namePart)*/
+    public static String selectName(String namePart) {
         if (namePart == null)
             namePart = "";
-        return pokemonListToJson(DBManagement.select("name LIKE '" + namePart + "%'"));
+        return pokemonListToJson(DBManagement.select("UPPER(name) LIKE UPPER('" + namePart + "%')"));
     }
 
+    /*Returns a json with all pokemons whose author is the one specified*/
     public static String selectAuthor(String author) {
-        return pokemonListToJson(DBManagement.select("author LIKE '" + author + "%'"));
+        return pokemonListToJson(DBManagement.select("UPPER(author) LIKE UPPER('" + author + "%')"));
     }
 
     /*Selects all pokemons from PokeCircle database*/
@@ -49,13 +52,22 @@ public class PokeCircle {
         return DBManagement.update(stringToPokemon(strPokemon));
     }
 
-    /*Adss a like to a pokemon from PokeCircle database*/
-    public static boolean addLike(short number) {
-        return true;
+    /*Adds a like to a pokemon from PokeCircle database*/
+    public static boolean addLike(int number) {
+        Pokemon pokemon = DBManagement.selectOne(number);
+        pokemon.setLikes(pokemon.getLikes() + 1);
+        return DBManagement.update(pokemon);
+    }
+
+    /*Removes a like from a pokemon from PokeCircle database*/
+    public static boolean removeLike(int number) {
+        Pokemon pokemon = DBManagement.selectOne(number);
+        pokemon.setLikes(pokemon.getLikes() - 1);
+        return DBManagement.update(pokemon);
     }
 
     /*Deletes a pokemon from PokeCircle database*/
-    public static boolean delete(short number) {
+    public static boolean delete(int number) {
         return DBManagement.delete(number);
     }
 
@@ -75,35 +87,22 @@ public class PokeCircle {
         short defense = Short.parseShort(attributesList[10]);
         short sp_defense = Short.parseShort(attributesList[11]);
         short speed = Short.parseShort(attributesList[12]);
-        Integer likes;
-        try {
-            likes = Integer.parseInt(attributesList[13]);
-        } catch (NumberFormatException nfe) {
-            likes = null;
-        }
+        int likes = Integer.parseInt(attributesList[13]);;
         String author = attributesList[14];
 
-        //System.out.println(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author).toString());
         return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author);
     }
 
-    /*Converts a Pokemon into a json*/
+    /*Converts a Pokemons list into a json*/
     private static String pokemonListToJson(List<Pokemon> pokemons) {
         String json = "[";
         for (Pokemon pokemon : pokemons) {
-            json += pokemon.toString();
+            json += pokemon.toString() + ",";
+        }
+        if (json.length() > 1) {
+            json = json.substring(0, json.length()-1);
         }
         json += "]";
         return json;
-    }
-
-    public static void main(String[] args) {
-        createDatabaseConnection();
-        String strPokemon = "{34,Nidoking,Poison,Ground,62,1.4,https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png,81,102,85,77,75,85,null,Nintendo}";
-        System.out.println("Actualizando " + strPokemon);
-        if (insert(strPokemon)) {
-            System.out.println(strPokemon + " actualizado correctamente");
-        }
-        // delete((short)34);
     }
 }
