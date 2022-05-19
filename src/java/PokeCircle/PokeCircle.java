@@ -75,8 +75,13 @@ public class PokeCircle {
         short defense = Short.parseShort(attributesList[10]);
         short sp_defense = Short.parseShort(attributesList[11]);
         short speed = Short.parseShort(attributesList[12]);
-        int likes = Integer.parseInt(attributesList[13]);
-        String author = attributesList[15];
+        Integer likes;
+        try {
+            likes = Integer.parseInt(attributesList[13]);
+        } catch (NumberFormatException nfe) {
+            likes = null;
+        }
+        String author = attributesList[14];
 
         //System.out.println(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author).toString());
         return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author);
@@ -94,10 +99,11 @@ public class PokeCircle {
 
     public static void main(String[] args) {
         createDatabaseConnection();
-        String strPokemon = "{34,Nidoking,Poison,Ground,62,1.4,https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png,81,102,85,77,75,85,0,true,Nintendo}";
-        System.out.println("Insertando " + strPokemon);
+        String strPokemon = "{34,Nidoking,Poison,Ground,62,1.4,https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png,81,102,85,77,75,85,null,Nintendo}";
+        System.out.println("Actualizando " + strPokemon);
         if (insert(strPokemon)) {
-            System.out.println(strPokemon + " insertado correctamente");
+            System.out.println(strPokemon + " actualizado correctamente");
         }
+        // delete((short)34);
     }
 }

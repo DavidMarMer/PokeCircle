@@ -19,7 +19,7 @@ package PokeCircle.src.java.PokeCircle;
     private short defense;
     private short sp_defense;
     private short speed;
-    private int likes;
+    private Integer likes;
     private String author;
 
     /*Constructor with all attributes except likes and type2, because its can be null*/
@@ -42,7 +42,7 @@ package PokeCircle.src.java.PokeCircle;
 
     /*Constructor with all attributes*/
     public Pokemon(int number, String name, String type1, String type2, float weight, float height, String image, short hp,
-        short attack, short sp_attack, short defense, short sp_defense, short speed, int likes, String author) {
+        short attack, short sp_attack, short defense, short sp_defense, short speed, Integer likes, String author) {
         this.number = number;
         this.name = name;
         this.type1 = type1;
@@ -121,7 +121,7 @@ package PokeCircle.src.java.PokeCircle;
         return speed;
     }
 
-    public int getLikes() {
+    public Integer getLikes() {
         return likes;
     }
 
