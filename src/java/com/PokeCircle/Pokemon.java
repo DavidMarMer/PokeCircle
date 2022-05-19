@@ -1,4 +1,4 @@
-package PokeCircle.src.java.com.PokeCircle;
+package com.PokeCircle;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez

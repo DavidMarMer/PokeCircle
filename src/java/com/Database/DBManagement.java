@@ -1,4 +1,4 @@
-package PokeCircle.src.java.com.Database;
+package com.Database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import PokeCircle.src.java.com.PokeCircle.Pokemon;
+import com.PokeCircle.Pokemon;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez
