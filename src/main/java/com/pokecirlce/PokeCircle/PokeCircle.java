@@ -1,78 +1,119 @@
-package com.PokeCircle;
+package com.pokecirlce.PokeCircle;
 
 import java.util.List;
 
-import com.Database.DBManagement;
+import com.pokecirlce.Database.DBManagement;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez
  */
 
+@RestController
+@RequestMapping("/api")
 public class PokeCircle {
 
     /*Connects to database*/
-    public static boolean createDatabaseConnection() {
+    @GetMapping("/createDatabaseConnection")
+    public static Boolean createDatabaseConnection() {
         return DBManagement.createConnection();
     }
 
     /*Disconnects from database*/
+    @GetMapping("/closeDatabaseConnection")
     public static boolean closeDatabaseConnection() {
         return DBManagement.closeConnection();
     }
 
     /*Inserts a new pokemon into the PokeCircle database*/
-    public static boolean insert(String strPokemon) {
+    @GetMapping("/insert/{strPokemon}")
+    @ResponseBody
+    public static boolean insert(@PathVariable String strPokemon) {
+        createDatabaseConnection();
         return DBManagement.insert(stringToPokemon(strPokemon));
     }
 
     /*Returns a json with all pokemons whose names match the first characters (namePart)*/
-    public static String selectName(String namePart) {
-        if (namePart == null)
-            namePart = "";
-        return pokemonListToJson(DBManagement.select("UPPER(name) LIKE UPPER('" + namePart + "%')"));
+    @GetMapping("/selectName/{namePart}")
+    @ResponseBody
+    public static String selectName(@PathVariable String namePart) {
+        createDatabaseConnection();
+        if (namePart == null || namePart.isEmpty())
+            return pokemonListToJson(DBManagement.select(""));
+        else
+            return pokemonListToJson(DBManagement.select("UPPER(name) LIKE UPPER('" + namePart + "%')"));
     }
 
     /*Returns a json with all pokemons whose author is the one specified*/
-    public static String selectAuthor(String author) {
-        return pokemonListToJson(DBManagement.select("UPPER(author) LIKE UPPER('" + author + "%')"));
+    @GetMapping("/selectAuthor/{author}")
+    @ResponseBody
+    public static String selectAuthor(@PathVariable String author) {
+        createDatabaseConnection();
+        if (author == null || author.isEmpty())
+            return pokemonListToJson(DBManagement.select(""));
+        else
+            return pokemonListToJson(DBManagement.select("UPPER(author) LIKE UPPER('" + author + "%')"));
     }
 
     /*Selects all pokemons from PokeCircle database*/
+    @GetMapping("/selectAll")
     public static String selectAll() {
+        createDatabaseConnection();
         return pokemonListToJson(DBManagement.select(null));
     }
 
     /*Selects one pokemon from PokeCircle database*/
-    public static String selectOne(int number) {
+    @GetMapping("/selectOne/{number}")
+    @ResponseBody
+    public static String selectOne(@PathVariable int number) {
+        createDatabaseConnection();
         return ((Pokemon)DBManagement.selectOne(number)).toString();
     }
 
     /*Updates a pokemon from PokeCircle database*/
-    public static boolean update(String strPokemon) {
+    @GetMapping("/update/{strPokemon}")
+    @ResponseBody
+    public static boolean update(@PathVariable String strPokemon) {
+        createDatabaseConnection();
         return DBManagement.update(stringToPokemon(strPokemon));
     }
 
     /*Adds a like to a pokemon from PokeCircle database*/
-    public static boolean addLike(int number) {
+    @GetMapping("/addLike/{number}")
+    @ResponseBody
+    public static boolean addLike(@PathVariable int number) {
+        createDatabaseConnection();
         Pokemon pokemon = DBManagement.selectOne(number);
         pokemon.setLikes(pokemon.getLikes() + 1);
         return DBManagement.update(pokemon);
     }
 
     /*Removes a like from a pokemon from PokeCircle database*/
-    public static boolean removeLike(int number) {
+    @GetMapping("/removeLike/{number}")
+    @ResponseBody
+    public static boolean removeLike(@PathVariable int number) {
+        createDatabaseConnection();
         Pokemon pokemon = DBManagement.selectOne(number);
         pokemon.setLikes(pokemon.getLikes() - 1);
         return DBManagement.update(pokemon);
     }
 
     /*Deletes a pokemon from PokeCircle database*/
-    public static boolean delete(int number) {
+    @GetMapping("/delete/{number}")
+    @ResponseBody
+    public static boolean delete(@PathVariable int number) {
+        createDatabaseConnection();
         return DBManagement.delete(number);
     }
 
     /*Converts a String into a Pokemon*/
     private static Pokemon stringToPokemon(String strPokemon) {
+        createDatabaseConnection();
         String[] attributesList = strPokemon.substring(strPokemon.indexOf("{")+1, strPokemon.indexOf("}")).split(",");
         int number = Integer.parseInt(attributesList[0]);
         String name = attributesList[1];
@@ -95,6 +136,7 @@ public class PokeCircle {
 
     /*Converts a Pokemons list into a json*/
     private static String pokemonListToJson(List<Pokemon> pokemons) {
+        createDatabaseConnection();
         String json = "[";
         for (Pokemon pokemon : pokemons) {
             json += pokemon.toString() + ",";

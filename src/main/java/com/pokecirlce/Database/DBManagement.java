@@ -1,4 +1,4 @@
-package com.Database;
+package com.pokecirlce.Database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.PokeCircle.Pokemon;
+import com.pokecirlce.PokeCircle.Pokemon;
 
 /**
  * Authors: David Martínez Merencio and María León Pérez
@@ -27,9 +27,8 @@ public class DBManagement {
         boolean correct = false;
         Properties properties = new Properties();
         try {
-            properties.load(new FileReader("PokeCircle/resources/MySQL.properties"));
+            properties.load(new FileReader("src/main/resources/MySQL.properties".replace('/', File.separatorChar)));
             Class.forName(properties.getProperty("driver"));
-            properties.load(new FileReader("PokeCircle/resources/MySQL.properties".replace('/', File.separatorChar)));
             connection = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("password"));
             System.out.println("Database connection successful");
             correct = true;
