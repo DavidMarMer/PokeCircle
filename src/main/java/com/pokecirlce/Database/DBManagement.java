@@ -132,6 +132,7 @@ public class DBManagement {
             }
         } catch (SQLException sqle) {
             System.err.println("General select failed");
+            sqle.printStackTrace();
         }
         return pokemons;
     }

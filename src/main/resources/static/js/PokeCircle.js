@@ -1,38 +1,42 @@
-// function pruebaGet() {
+var pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
 
-//     let httpRequest = new XMLHttpRequest();
-//     httpRequest.open("GET", "http://localhost:8080/api/selectName/nido");
-//     httpRequest.send();
-//     httpRequest.onload = function() {
-//         document.getElementById("p1").innerHTML = httpRequest.responseText;
-//     }
-//     console.log("inside the .js file");
-// }
-function submitForm() {
+function callBackend(method) {
 
-    /* stop form from submitting normally */
-    // event.preventDefault();
-
-    /* get the action attribute from the <form action=""> element */
-    var $form = docuemnt.forms["pokemonFilter"],
-        url = $form.attr('action');
-        console.log(url);
-
-    /* Send the data using post with element id name and name2*/
-    var posting = $.post(url, {
-        number: $('#number').val(),
-        name: $('#name').val(),
-        author: $('#author').val(),
-        type1: $('#type1').val(),
-        type2: $('#type2').val()
-    });
-    console.log(posting);
-
-    /* Alerts the results */
-    posting.done(function (data) {
-        $('#result').text('success');
-    });
-    posting.fail(function () {
-        $('#result').text('failed');
-    });
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "http://localhost:8080/api/" + method);
+    httpRequest.send();
+    httpRequest.onload = function() {
+        document.getElementById("p1").innerHTML = httpRequest.responseText;
+        var answer = httpRequest.responseText;
+    }
+    console.log("inside the .js file");
 }
+
+var submitButton = document.getElementById('submitButton');
+submitButton.addEventListener('click', function(event) {
+    let nameText = document.getElementById('name').value;
+    let numberText = document.getElementById('number').value;
+    let authorText = document.getElementById('author').value;
+    let type1Text = document.getElementById('type1').value;
+    let type2Text = document.getElementById('type2').value;
+
+    urlMethod = 'selectFilter/';
+    if (numberText != '') {
+        urlMethod += numberText + '/';
+    } else {
+        urlMethod += '0' + '/';
+    }
+    if (nameText != '') {
+        urlMethod += nameText + '/';
+    } else {
+        urlMethod += "''" + '/';
+    }
+    if (authorText != '') {
+        urlMethod += authorText + '/';
+    } else {
+        urlMethod += "''" + '/';
+    }
+    urlMethod += type1Text + '/' + type2Text;
+
+    callBackend(urlMethod);
+});

@@ -75,6 +75,23 @@ public class PokeCircle {
         return ((Pokemon)DBManagement.selectOne(number)).toString();
     }
 
+    public static void main(String[] args) {
+        System.out.println(selectFilter(0, "''", "''", "steel", "none"));
+    }
+    /*Selects pokemons from PokeCircle database applying HTML filter*/
+    @GetMapping("/selectFilter/{number}/{name}/{author}/{type1}/{type2}")
+    @ResponseBody
+    public static String selectFilter(@PathVariable("number") int number, @PathVariable("name") String name, @PathVariable("author") String author, @PathVariable("type1") String type1, @PathVariable("type2") String type2) {
+        createDatabaseConnection();
+        if (name == null || name == "''") {
+            name = "";
+        }
+        if (author == null || author.isEmpty() || author == "''") {
+            author = "Nintendo";
+        }
+        return pokemonListToJson(DBManagement.select("number = " + number + " AND UPPER(name) LIKE UPPER('" + name + "%') AND UPPER(author) LIKE UPPER('" + author + "%') AND UPPER(type1) = UPPER('" + type1 + "') AND UPPER(type2) = UPPER('" + type2 + "')"));
+    }
+
     /*Updates a pokemon from PokeCircle database*/
     @GetMapping("/update/{strPokemon}")
     @ResponseBody
@@ -113,7 +130,6 @@ public class PokeCircle {
 
     /*Converts a String into a Pokemon*/
     private static Pokemon stringToPokemon(String strPokemon) {
-        createDatabaseConnection();
         String[] attributesList = strPokemon.substring(strPokemon.indexOf("{")+1, strPokemon.indexOf("}")).split(",");
         int number = Integer.parseInt(attributesList[0]);
         String name = attributesList[1];
@@ -136,7 +152,6 @@ public class PokeCircle {
 
     /*Converts a Pokemons list into a json*/
     private static String pokemonListToJson(List<Pokemon> pokemons) {
-        createDatabaseConnection();
         String json = "[";
         for (Pokemon pokemon : pokemons) {
             json += pokemon.toString() + ",";

@@ -7,13 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/pokeball.png" type="image/png">
     <title>PokeCircle</title>
-    <script src="js/PokeCircle.js"></script>
 </head>
 
 <body>
-    <!-- <p id="p1">a</p>
-    <button onclick="pruebaGet()">click</button> -->
-    <form action="submitForm()" autocomplete="off" id="pokemonFilter" name="pokemonFilter">
+    <p id="p1">a</p>
+    <form action="javascript:void(0)" autocomplete="off" id="pokemonFilter" name="pokemonFilter">
         <label for="number">Number:</label>
         <input type="text" id="number" name="number"><br>
         <label for="name">Name:</label>
@@ -63,8 +61,10 @@
             <option value="flying">flying</option>
             <option value="fairy">fairy</option>
         </select><br><br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id="submitButton">
     </form>
+    
+    <script src="js/PokeCircle.js"></script>
 </body>
 
 </html>
