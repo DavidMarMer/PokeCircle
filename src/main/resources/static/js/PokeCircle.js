@@ -1,4 +1,4 @@
-/*Being Login*/
+/*Begin Login*/
 var register_form = document.getElementById('register-form');
 var login_form = document.getElementById('login-form');
 
@@ -17,11 +17,12 @@ function switctToRegister() {
 /*End Login*/
 
 var pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
+const SPRINGBOOT_URL = 'http://localhost:8080/api/';
 
 function callBackend(method) {
 
     let httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "http://localhost:8080/api/" + method);
+    httpRequest.open('GET', SPRINGBOOT_URL + method);
     httpRequest.send();
     httpRequest.onload = function() {
         document.getElementById("p1").innerHTML = httpRequest.responseText;

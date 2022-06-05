@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/pokeball.png" type="image/png">
+    <link href="css/PokeCircle.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body background="img/background_creator.jpg">
+    <div class="creator-page">
+        <div class="form">
+            <h1>Create your Pokemon</h1>
+            <form id="login-form">
+                <input type="text" placeholder="name" />
+                <input type="number" min="1" max="300" placeholder="height" />
+                <input type="number" min="1" max="300" placeholder="weight" />
+                <input type="number" min="1" max="300" placeholder="hp" />
+                <input type="number" min="1" max="300" placeholder="attack" />
+                <input type="number" min="1" max="300" placeholder="special attack" />
+                <input type="number" min="1" max="300" placeholder="defense" />
+                <input type="number" min="1" max="300" placeholder="special defense" />
+                <input type="number" min="1" max="300" placeholder="speed" />
+                <input type="text" placeholder="link image" />
+                <select name="type1" id="type1" form="pokemonFilter" aria-placeholder="type 1">
+                    <option value="steel">steel</option>
+                    <option value="water">water</option>
+                    <option value="bug">bug</option>
+                    <option value="dragon">dragon</option>
+                    <option value="electric">electric</option>
+                    <option value="ghost">ghost</option>
+                    <option value="fire">fire</option>
+                    <option value="ice">ice</option>
+                    <option value="fight">fight</option>
+                    <option value="normal">normal</option>
+                    <option value="grass">grass</option>
+                    <option value="psychic">psychic</option>
+                    <option value="rock">rock</option>
+                    <option value="dark">dark</option>
+                    <option value="ground">ground</option>
+                    <option value="poison">poison</option>
+                    <option value="flying">flying</option>
+                    <option value="fairy">fairy</option>
+                </select>
+                <select name="type2" id="type2" form="pokemonFilter" aria-placeholder="type 2">
+                    <option value="none">none</option>
+                    <option value="steel">steel</option>
+                    <option value="water">water</option>
+                    <option value="bug">bug</option>
+                    <option value="dragon">dragon</option>
+                    <option value="electric">electric</option>
+                    <option value="ghost">ghost</option>
+                    <option value="fire">fire</option>
+                    <option value="ice">ice</option>
+                    <option value="fight">fight</option>
+                    <option value="normal">normal</option>
+                    <option value="grass">grass</option>
+                    <option value="psychic">psychic</option>
+                    <option value="rock">rock</option>
+                    <option value="dark">dark</option>
+                    <option value="ground">ground</option>
+                    <option value="poison">poison</option>
+                    <option value="flying">flying</option>
+                    <option value="fairy">fairy</option>
+                </select>
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/PokeCircle.js"></script>
+</body>
+</html>
