@@ -1,3 +1,21 @@
+/*Being Login*/
+var register_form = document.getElementById('register-form');
+var login_form = document.getElementById('login-form');
+
+register_form.addEventListener('click', switctToLogin, false);
+login_form.addEventListener('click', switctToRegister, false);
+
+function switctToLogin() {
+  register_form.style.display = 'none';
+  login_form.style.display = 'block';
+}
+
+function switctToRegister() {
+  register_form.style.display = 'block';
+  login_form.style.display = 'none';
+}
+/*End Login*/
+
 var pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
 
 function callBackend(method) {
