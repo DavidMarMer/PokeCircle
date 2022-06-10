@@ -124,3 +124,94 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+
+.menu {
+    top: 0;
+    width: 100%;
+    background-color: rgba(29,44,94,.8549019607843137);
+    position: fixed;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: "Fredoka",sans-serif;
+    box-shadow: 1px 0 5px #000;
+}
+
+.logo {
+    width: 150px;
+    border-radius: 15px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    font-family: "Fredoka",sans-serif;
+}
+
+.selectFil {
+    border: 2px solid #f10404;
+    outline: none;
+    letter-spacing: 1.5px;
+    border-radius: 10px;
+    margin: 0 1rem;
+    text-align: center;
+    font-family: "Fredoka",sans-serif;
+    width: 100px;
+    height: 25px;
+    font-weight: bolder;
+}
+
+.search {
+    background-color: transparent;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    display: flex;
+    color: white;
+    border-radius: 20px;
+    align-items: center;
+    padding: 4px 12px;
+    border: 2px solid #fff;
+}
+
+.input {
+    color: #fff;
+    font-family: "Fredoka",sans-serif;
+    font-weight: 400;
+    padding: 5px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.createButton {
+    display: flex;
+    align-items: center;
+    grid-column-gap: 10px;
+    -webkit-column-gap: 10px;
+    column-gap: 10px;
+    padding: 10px 15px;
+    background-color: #fff;
+    font-weight: bolder;
+    font-size: 1rem;
+    border: 2px solid #000;
+    border-radius: 100px;
+    color: #f10404;
+}
+
+.imgSearch {
+    width: 20px;
+    height: 20px;
+}
+
+.pokeball1 {
+    width: 20px;
+}
+
