@@ -1,19 +1,19 @@
 /*Begin Login*/
-var register_form = document.getElementById('register-form');
-var login_form = document.getElementById('login-form');
+// var register_form = document.getElementById('register-form');
+// var login_form = document.getElementById('login-form');
 
-register_form.addEventListener('click', switctToLogin, false);
-login_form.addEventListener('click', switctToRegister, false);
+// register_form.addEventListener('click', switctToLogin, false);
+// login_form.addEventListener('click', switctToRegister, false);
 
-function switctToLogin() {
-  register_form.style.display = 'none';
-  login_form.style.display = 'block';
-}
+// function switctToLogin() {
+//   register_form.style.display = 'none';
+//   login_form.style.display = 'block';
+// }
 
-function switctToRegister() {
-  register_form.style.display = 'block';
-  login_form.style.display = 'none';
-}
+// function switctToRegister() {
+//   register_form.style.display = 'block';
+//   login_form.style.display = 'none';
+// }
 /*End Login*/
 
 var pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
@@ -59,3 +59,49 @@ submitButton.addEventListener('click', function(event) {
 
     callBackend(urlMethod);
 });
+
+/*Pokemon class*/
+class Pokemon {
+    constructor(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author) {
+        this.number = number;
+        this.name = name;
+        this.type1 = type1;
+        this.type2 = type2;
+        this.weight = weight;
+        this.height = height;
+        this.image = image;
+        this.hp = hp;
+        this.attack = attack;
+        this.sp_attack = sp_attack;
+        this.defense = defense;
+        this.sp_defense = sp_defense;
+        this.speed = speed;
+        this.likes = likes;
+        this.author = author;
+    }
+
+    toJson() {
+        return JSON.stringify(this);
+    }
+}
+
+function jsonToPokemon(json) {
+    let pkm = JSON.parse(json);
+    if (typeof pkm.length == 'undefinied') {
+        return new Pokemon(pkm.number, pkm.name, pkm.type1, pkm.type2, pkm.weight, pkm.height, pkm.image, pkm.hp,
+            pkm.attack, pkm.sp_attack, pkm.defense, pkm.sp_defense, pkm.speed, pkm.likes, pkm.author);
+    } else {
+        pkmList = new Array();
+        let actualPkm;
+        for (let i = 0; i < pkm.length; i++) {
+            actualPkm = pkm[i];
+            pkmList.push(new Pokemon(actualPkm.number, actualPkm.name, actualPkm.type1, actualPkm.type2, actualPkm.weight, actualPkm.height, actualPkm.image, actualPkm.hp,
+                actualPkm.attack, actualPkm.sp_attack, actualPkm.defense, actualPkm.sp_defense, actualPkm.speed, actualPkm.likes, actualPkm.author));
+        }
+        return pkmList;
+    }
+}
+
+// var pokemon =  new Pokemon(1, 'Pikachu', 'electric', 'none', 1, 1, 'img', 1, 1, 1, 1, 1, 1, 0, 'Nintendo');
+// console.log(jsonToPokemon('{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}'));
+console.log(jsonToPokemon('[{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"},{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}]'));
