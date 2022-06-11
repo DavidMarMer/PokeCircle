@@ -311,7 +311,7 @@ table {
 }
 
 .DetailPokemon_stat_group__1BaaX>div>label {
-    background-color: #0075ff;
+    background-color: #ab0303;
     border-radius: 50%;
     padding: 5px 7px;
     color: #fff;
@@ -377,3 +377,210 @@ table {
 #linkCreatorImg {
     max-width: 50%;
 }
+.Pokemons_pokemons_card__1ioFa {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 7rem 1.5rem 1.5rem;
+}
+
+.Pokemon_poke_container__FwTZC {
+    background-color: hsla(0,0%,100%,.23137254901960785);
+    width: 180px;
+    padding: 1rem 3rem 2rem;
+    margin: 0.5rem;
+    border-radius: 25px;
+    border: 1px solid #000;
+    box-shadow: 2px 4px 4px rgb(0 0 0 / 35%);
+    height: 370px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Pokemon_pokemon_name__1bNtv {
+    font-weight: 500;
+    text-align: center;
+}
+
+.Pokemon_pokemon_name__1bNtv, a {
+    font-family: "Fredoka",sans-serif;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.Pokemon_poke_img__3c_lA {
+    width: 150px;
+    max-height: 150px;
+    align-self: center;
+}
+
+.Pokemon_pokemon_stats__2hKRG {
+    margin-top: 1rem;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-wrap: wrap;
+    max-height: 80px;
+    grid-row-gap: 20px;
+    row-gap: 20px;
+    color: #000;
+}
+
+.Pokemon_pokemon_types__1Q59I {
+    margin-top: 1rem;
+    padding: 7px 12px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 20px;
+    background-color: #f10404;
+
+}
+
+.Pokemon_with_border__3kiKL {
+    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+}
+
+.Pokemon_pokemon_types__1Q59I>p {
+    margin: 0;
+    font-weight: 500;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+#num {
+    font-weight: bolder;
+}
+
+#likes {
+    color: gray;
+    text-align: right;
+}
+
+.like {
+    margin-left: 75px;
+}
+
+/* .DetailPokemon_trash_can__3aj7I {
+    width: 80px;
+    position: absolute;
+    bottom: 40px;
+    right: 100px;
+    transition: all .3s;
+}
+.DetailPokemon_detail_pokemon__1ON7g {
+    display: flex;
+    height: 100vh;
+    background-color: #fff;
+    width: 100vw;
+    font-family: "Fredoka",sans-serif;
+    font-weight: bolder;
+}
+
+.DetailPokemon_edit_icon__JhYw- {
+    width: 70px;
+    position: absolute;
+    bottom: 40px;
+    right: 210px;
+    transition: all .3s;
+}
+
+.DetailPokemon_hidden__1HsTx {
+    display: none;
+}
+.DetailPokemon_save_icon__ZDnUc {
+    width: 70px;
+    bottom: 40px;
+    width: 55px;
+    position: absolute;
+    bottom: 48px;
+    right: 210px;
+    transition: all .3s;
+} */
+
+
+/* .Paginate_page_numbers__1iAIr {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    background-color: #1d2c5e;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 0 10px;
+    margin: auto auto 1rem;
+    border-radius: 20px;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.Paginate_single_pager__1T0iA {
+    border-radius: 20px;
+    border: none;
+    font-family: "Architects Daughter",cursive;
+    font-weight: bolder;
+    color: #fff;
+    background-color: transparent;
+}
+
+button {
+    appearance: auto;
+    writing-mode: horizontal-tb;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
+    margin: 0em;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+}
+
+.Paginate_number__1-u0P {
+    font-family: "Fredoka",sans-serif;
+    font-weight: bolder;
+    margin: 10px;
+    background-color: #fff;
+    border: none;
+    border-radius: 20px;
+    color: #f10404;
+} */
