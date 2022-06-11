@@ -1,64 +1,147 @@
-/*Begin Login*/
-// var register_form = document.getElementById('register-form');
-// var login_form = document.getElementById('login-form');
-
-// register_form.addEventListener('click', switctToLogin, false);
-// login_form.addEventListener('click', switctToRegister, false);
-
-// function switctToLogin() {
-//   register_form.style.display = 'none';
-//   login_form.style.display = 'block';
-// }
-
-// function switctToRegister() {
-//   register_form.style.display = 'block';
-//   login_form.style.display = 'none';
-// }
-/*End Login*/
-
-var pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
+var username, pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
+/*Spring Boot base url*/
 const SPRINGBOOT_URL = 'http://localhost:8080/api/';
 
-function callBackend(method) {
+/*Begin Login*/
+var swithToRegister = document.getElementById('swithToRegister');
+var swithToLogin = document.getElementById('swithToLogin');
+var register_form = document.getElementById('register-form');
+var login_form = document.getElementById('login-form');
+var registerBtn = document.getElementById('registerBtn');
+var loginBtn = document.getElementById('loginBtn');
 
+swithToRegister.addEventListener('click', function() {
+    login_form.style.display = 'none';
+    register_form.style.display = 'block';
+});
+
+swithToLogin.addEventListener('click', function() {
+    login_form.style.display = 'block';
+    register_form.style.display = 'none';
+});
+
+registerBtn.addEventListener('click', function() {
+    let registerName = document.getElementById('registerName').value;
+    let registerPassword = document.getElementById('registerPassword').value;
+    let registerRepeatPassword = document.getElementById('registerRepeatPassword').value;
+
+    if (registerName == '' || registerPassword == '' || registerRepeatPassword == '') {
+        console.log('Empty fields');
+    } else if (registerPassword == registerRepeatPassword) {
+        let httpRequest = new XMLHttpRequest();
+        httpRequest.open('GET', SPRINGBOOT_URL + 'createUser/' + registerName + '/' + registerPassword);
+        httpRequest.send();
+        httpRequest.onload = function() {
+            if (httpRequest.responseText == 'true') {
+                username = registerName;
+                loadMainPage();
+            } else {
+                console.log('This user already exists');
+            }
+        }
+    } else {
+        console.log("Passwords don't match");
+    }
+});
+
+loginBtn.addEventListener('click', function() {
+    let loginName = document.getElementById('loginName').value;
+    let loginPassword = document.getElementById('loginPassword').value;
+    if (loginName == '' || loginPassword == '') {
+        console.log('Empty fields');
+    } else {
+        let httpRequest = new XMLHttpRequest();
+        httpRequest.open('GET', SPRINGBOOT_URL + 'checkUser/' + loginName + '/' + loginPassword);
+        httpRequest.send();
+        httpRequest.onload = function() {
+            if (httpRequest.responseText == 'true') {
+                localStorage.setItem('username', loginName);
+                localString.setItem('console', window.console);
+                // username = loginName;
+                loadMainPage();
+            } else {
+                console.log('Incorrect user');
+            }
+        }
+    }
+});
+/*End Login*/
+
+function updateBakend(method) {
     let httpRequest = new XMLHttpRequest();
     httpRequest.open('GET', SPRINGBOOT_URL + method);
     httpRequest.send();
     httpRequest.onload = function() {
-        document.getElementById("p1").innerHTML = httpRequest.responseText;
-        var answer = httpRequest.responseText;
+        console.log('Update done', httpRequest.responseText);
     }
-    console.log("inside the .js file");
 }
 
-var submitButton = document.getElementById('submitButton');
-submitButton.addEventListener('click', function(event) {
-    let nameText = document.getElementById('name').value;
-    let numberText = document.getElementById('number').value;
-    let authorText = document.getElementById('author').value;
-    let type1Text = document.getElementById('type1').value;
-    let type2Text = document.getElementById('type2').value;
+function loadMainPage() {
+    // window.location.replace('http://127.0.0.1:5500/src/main/resources/static/index.html');
+    console.log('username',localStorage.getItem('username'));
+    // window.console = localString.getItem('console');
+    // document.getElementById('p1').innerHTML = localStorage.getItem('username');
+    
+    var submitButton = document.getElementById('submitButton');
+    /*Select called when filter applied*/
+    submitButton.addEventListener('click', function() {
+        let nameText = document.getElementById('name').value;
+        let numberText = document.getElementById('number').value;
+        let authorText = document.getElementById('author').value;
+        let type1Text = document.getElementById('type1').value;
+        let type2Text = document.getElementById('type2').value;
 
-    urlMethod = 'selectFilter/';
-    if (numberText != '') {
-        urlMethod += numberText + '/';
-    } else {
-        urlMethod += '0' + '/';
-    }
-    if (nameText != '') {
-        urlMethod += nameText + '/';
-    } else {
-        urlMethod += "''" + '/';
-    }
-    if (authorText != '') {
-        urlMethod += authorText + '/';
-    } else {
-        urlMethod += "''" + '/';
-    }
-    urlMethod += type1Text + '/' + type2Text;
+        if (numberText == '') {
+            numberText = '0';
+        }
+        if (nameText == '') {
+            nameText = '""';
+        }
+        if (authorText == '') {
+            authorText = '""';
+        }
 
-    callBackend(urlMethod);
-});
+        selectFilterPokemons(nameText, numberText, authorText, type1Text, type2Text);
+    });
+}
+
+function selectFilterPokemons(nameText, numberText, authorText, type1Text, type2Text) {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectFilter/' + nameText + '/' + numberText + '/' + authorText + '/' + type1Text + '/' + type2Text);
+    httpRequest.send();
+    httpRequest.onload = function() {
+        console.log('selectFilterPokemons', httpRequest.responseText);
+    }
+}
+
+function selectOfficialPokemons() {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectAuthor/Nintendo');
+    httpRequest.send();
+    httpRequest.onload = function() {
+        console.log('selectAuthor', httpRequest.responseText);
+    }
+}
+
+function deletePokemon(number) {
+    updateBakend('delete/' + number);
+}
+
+function updatePokemon(pokemon) {
+    updateBakend('update/' + pokemon.toJson());
+}
+
+function insertPokemon(pokemon) {
+    updateBakend('insert/' + pokemon.toJson());
+}
+
+function addLike(pkmNumber) {
+    updateBakend('addLike/' + pkmNumber);
+}
+
+function removeLike(pkmNumber) {
+    updateBakend('removeLike/' + pkmNumber);
+}
 
 /*Pokemon class*/
 class Pokemon {
@@ -80,11 +163,13 @@ class Pokemon {
         this.author = author;
     }
 
+    /*Transforms a Pokemon into a JSON*/
     toJson() {
         return JSON.stringify(this);
     }
 }
 
+/*Converts a json into a Pokemon or Array<Pokemon>*/
 function jsonToPokemon(json) {
     let pkm = JSON.parse(json);
     if (typeof pkm.length == 'undefinied') {

@@ -13,18 +13,18 @@
 <body background="img/background_login.jpg">
     <div class="login-page">
         <div class="form">
-            <form id="register-form">
-                <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" />
-                <input type="text" placeholder="repeat password" />
-                <button>create account</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
+            <form id="register-form" action="http://127.0.0.1:5500/src/main/resources/static/index.html">
+                <input type="text" id="registerName" placeholder="username" />
+                <input type="password" id="registerPassword" placeholder="password" />
+                <input type="password" id="registerRepeatPassword" placeholder="repeat password" />
+                <button type="submit" id="registerBtn">create account</button>
+                <p class="message">Already registered? <a href="#" id="swithToLogin">Sign In</a></p>
             </form>
-            <form id="login-form">
-                <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" />
-                <button>login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <form id="login-form" action="http://127.0.0.1:5500/src/main/resources/static/index.html">
+                <input type="text" id="loginName" placeholder="username" />
+                <input type="password" id="loginPassword" placeholder="password" />
+                <button type="submit" id="loginBtn">login</button>
+                <p class="message">Not registered? <a href="#" id="swithToRegister">Create an account</a></p>
             </form>
         </div>
     </div>
