@@ -132,7 +132,6 @@ public class DBManagement {
             }
         } catch (SQLException sqle) {
             System.err.println("General select failed");
-            sqle.printStackTrace();
         }
         return pokemons;
     }
@@ -177,6 +176,59 @@ public class DBManagement {
         } else {
             System.err.println("Error deleting the pokemon, it doesn't exist");
             correct = false;
+        }
+        return correct;
+    }
+
+    /*Creates a new user in "USER" table from PokeCircle database*/
+    public static boolean createUser(String username, String password) {
+        boolean correct = false;
+        String command = "INSERT INTO pokecircle.user (USERNAME, PASSWORD) VALUES ('" + username + "', '" + password + "');";
+        if (!existsUsername(username)) {
+            try {
+                Statement st = connection.createStatement();
+                st.executeUpdate(command);
+                correct = true;
+                System.out.println("User created");
+            } catch (SQLException sqle) {
+                System.err.println("Error creating an user");
+            }
+        }
+        return correct;
+    }
+
+    public static boolean checkUser(String username, String password) {
+        boolean correct = false;
+        String command = "SELECT username, password FROM pokecircle.user WHERE username = '" + username + "';";
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(command);
+            if (rs.next() && rs.getString("password").equals(password)) {
+                correct = true;
+                System.out.println("Correct user");
+            } else {
+                System.out.println("Incorrect user");
+            }
+        } catch (SQLException sqle) {
+            System.err.println("Error cheking that an user exists");
+        }
+        return correct;
+    }
+
+    private static boolean existsUsername(String username) {
+        boolean correct = false;
+        String command = "SELECT username FROM pokecircle.user WHERE username = '" + username + "';";
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(command);
+            if (rs.next()) {
+                correct = true;
+                System.out.println("User exists");
+            } else {
+                System.out.println("User doesn't exist");
+            }
+        } catch (SQLException sqle) {
+            System.err.println("Error cheking that an username exists");
         }
         return correct;
     }

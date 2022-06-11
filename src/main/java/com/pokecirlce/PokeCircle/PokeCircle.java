@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class PokeCircle {
 
     /*Connects to database*/
-    @GetMapping("/createDatabaseConnection")
+    //@GetMapping("/createDatabaseConnection")
     public static Boolean createDatabaseConnection() {
         return DBManagement.createConnection();
     }
 
     /*Disconnects from database*/
-    @GetMapping("/closeDatabaseConnection")
+    //@GetMapping("/closeDatabaseConnection")
     public static boolean closeDatabaseConnection() {
         return DBManagement.closeConnection();
     }
@@ -75,9 +75,6 @@ public class PokeCircle {
         return ((Pokemon)DBManagement.selectOne(number)).toString();
     }
 
-    public static void main(String[] args) {
-        System.out.println(selectFilter(0, "''", "''", "steel", "none"));
-    }
     /*Selects pokemons from PokeCircle database applying HTML filter*/
     @GetMapping("/selectFilter/{number}/{name}/{author}/{type1}/{type2}")
     @ResponseBody
@@ -161,5 +158,19 @@ public class PokeCircle {
         }
         json += "]";
         return json;
+    }
+
+    @GetMapping("/createUser/{username}/{password}")
+    @ResponseBody
+    public static boolean createUser(@PathVariable("username") String username, @PathVariable("password") String password) {
+        createDatabaseConnection();
+        return DBManagement.createUser(username, password);
+    }
+
+    @GetMapping("/checkUser/{username}/{password}")
+    @ResponseBody
+    public static boolean checkUser(@PathVariable("username") String username, @PathVariable("password") String password) {
+        createDatabaseConnection();
+        return DBManagement.checkUser(username, password);
     }
 }
