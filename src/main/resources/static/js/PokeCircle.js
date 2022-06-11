@@ -1,4 +1,3 @@
-var pkmNumber, pkmName, pkmAuthor, pkmType1, pkmType2;
 /*Spring Boot base url*/
 const SPRINGBOOT_URL = 'http://localhost:8080/api/';
 
@@ -7,15 +6,20 @@ var swithToRegister = document.getElementById('swithToRegister');
 var swithToLogin = document.getElementById('swithToLogin');
 var register_form = document.getElementById('register-form');
 var login_form = document.getElementById('login-form');
-swithToRegister.addEventListener('click', function() {
-    login_form.style.display = 'none';
-    register_form.style.display = 'block';
-});
 
-swithToLogin.addEventListener('click', function() {
-    login_form.style.display = 'block';
-    register_form.style.display = 'none';
-});
+if (typeof swithToRegister == 'undefined') {
+    swithToRegister.addEventListener('click', function() {
+        login_form.style.display = 'none';
+        register_form.style.display = 'block';
+    });
+}
+
+if (typeof swithToLogin == 'undefined') {
+    swithToLogin.addEventListener('click', function() {
+        login_form.style.display = 'block';
+        register_form.style.display = 'none';
+    });
+}
 
 function register() {
     let registerName = document.getElementById('registerName').value;
@@ -62,16 +66,14 @@ function updateBakend(method) {
     httpRequest.open('GET', SPRINGBOOT_URL + method);
     httpRequest.send();
     httpRequest.onload = function() {
-        console.log('Update done', httpRequest.responseText);
+        console.log('Update', httpRequest.responseText);
     }
 }
 
 function loadMainPage(password, repeatPassword) {
     if (password == repeatPassword || typeof repeatPassword == 'undefined') {
-        window.location.replace('http://127.0.0.1:5500/src/main/resources/static/index.html');
-        alert(localStorage.getItem('username'));
-        
-        var submitButton = document.getElementById('submitButton');
+        window.location.replace('index.html');
+        let submitButton = document.getElementById('submitButton');
         /*Select called when filter applied*/
         submitButton.addEventListener('click', function() {
             let nameText = document.getElementById('name').value;
@@ -92,6 +94,34 @@ function loadMainPage(password, repeatPassword) {
     
             selectFilterPokemons(nameText, numberText, authorText, type1Text, type2Text);
         });
+    }
+}
+
+function changeIMG() {
+    let imgURL = document.getElementById('imgURL').value;
+    document.getElementById('linkCreatorImg').setAttribute('src', imgURL);
+}
+
+function createPokemon() {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectLastPokemon');
+    httpRequest.send();
+    httpRequest.onload = function() {
+        let number = parseInt(jsonToPokemon(httpRequest.responseText).number) + 1;
+        let name = document.getElementById('name').value;
+        let height = parseFloat(document.getElementById('height').value);
+        let weight = document.getElementById('weight').value;
+        let hp = document.getElementById('hp').value;
+        let attack = parseInt(document.getElementById('attack').value);
+        let sp_attack = document.getElementById('special attack').value;
+        let defense = document.getElementById('defense').value;
+        let sp_defense = document.getElementById('special defense').value;
+        let speed = document.getElementById('speed').value;
+        let image = document.getElementById('imgURL').value;
+        let type1 = document.getElementById('type1').value;
+        let type2 = document.getElementById('type2').value;
+        // console.log(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, 0, localStorage.getItem('username')));
+        insertPokemon(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, 0, localStorage.getItem('username')));
     }
 }
 
@@ -118,11 +148,11 @@ function deletePokemon(number) {
 }
 
 function updatePokemon(pokemon) {
-    updateBakend('update/' + pokemon.toJson());
+    updateBakend('update/' + pokemon.toString());
 }
 
 function insertPokemon(pokemon) {
-    updateBakend('insert/' + pokemon.toJson());
+    updateBakend('insert/' + pokemon.toString());
 }
 
 function addLike(pkmNumber) {
@@ -136,20 +166,20 @@ function removeLike(pkmNumber) {
 /*Pokemon class*/
 class Pokemon {
     constructor(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author) {
-        this.number = number;
+        this.number = parseInt(number);
         this.name = name;
         this.type1 = type1;
         this.type2 = type2;
-        this.weight = weight;
-        this.height = height;
+        this.weight = parseFloat(weight);
+        this.height = parseFloat(height);
         this.image = image;
-        this.hp = hp;
-        this.attack = attack;
-        this.sp_attack = sp_attack;
-        this.defense = defense;
-        this.sp_defense = sp_defense;
-        this.speed = speed;
-        this.likes = likes;
+        this.hp = parseInt(hp);
+        this.attack = parseInt(attack);
+        this.sp_attack = parseInt(sp_attack);
+        this.defense = parseInt(defense);
+        this.sp_defense = parseInt(sp_defense);
+        this.speed = parseInt(speed);
+        this.likes = parseInt(likes);
         this.author = author;
     }
 
@@ -157,12 +187,17 @@ class Pokemon {
     toJson() {
         return JSON.stringify(this);
     }
+
+    toString() {//Falla url
+        return `${this.number},${this.name},${this.type1},${this.type2},${this.weight},${this.height},${this.image},` +
+            `${this.hp},${this.attack},${this.sp_attack},${this.defense},${this.sp_defense},${this.speed},${this.likes},${this.author}`;
+    }
 }
 
 /*Converts a json into a Pokemon or Array<Pokemon>*/
 function jsonToPokemon(json) {
     let pkm = JSON.parse(json);
-    if (typeof pkm.length == 'undefinied') {
+    if (typeof pkm.length == 'undefined') {
         return new Pokemon(pkm.number, pkm.name, pkm.type1, pkm.type2, pkm.weight, pkm.height, pkm.image, pkm.hp,
             pkm.attack, pkm.sp_attack, pkm.defense, pkm.sp_defense, pkm.speed, pkm.likes, pkm.author);
     } else {
@@ -178,5 +213,5 @@ function jsonToPokemon(json) {
 }
 
 // var pokemon =  new Pokemon(1, 'Pikachu', 'electric', 'none', 1, 1, 'img', 1, 1, 1, 1, 1, 1, 0, 'Nintendo');
-// console.log(jsonToPokemon('{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}'));
-console.log(jsonToPokemon('[{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"},{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}]'));
+// console.log(jsonToPokemon('[{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}]'));
+// console.log(jsonToPokemon('[{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"},{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}]'));

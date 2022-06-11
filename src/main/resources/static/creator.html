@@ -6,24 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/pokeball.png" type="image/png">
     <link href="css/PokeCircle.css" rel="stylesheet">
-    <title>Document</title>
+    <title>PokeCircle</title>
 </head>
 <body background="img/background_creator.jpg">
     <div class="creator-page">
         <div class="form">
             <h1>Create your Pokemon</h1>
-            <form id="login-form">
-                <input type="text" placeholder="name" />
-                <input type="number" min="1" max="300" placeholder="height" />
-                <input type="number" min="1" max="300" placeholder="weight" />
-                <input type="number" min="1" max="300" placeholder="hp" />
-                <input type="number" min="1" max="300" placeholder="attack" />
-                <input type="number" min="1" max="300" placeholder="special attack" />
-                <input type="number" min="1" max="300" placeholder="defense" />
-                <input type="number" min="1" max="300" placeholder="special defense" />
-                <input type="number" min="1" max="300" placeholder="speed" />
-                <input type="text" placeholder="link image" />
-                <select name="type1" id="type1" form="pokemonFilter" aria-placeholder="type 1">
+            <form id="creatorForm" autocomplete="off" action="javascript:createPokemon()">
+                <input type="text" placeholder="name" id="name" required />
+                <input type="number" min="1" max="300" step="any" placeholder="height" id="height" required />
+                <input type="number" min="1" max="300" step="any" placeholder="weight" id="weight" required />
+                <input type="number" min="1" max="300" placeholder="hp" id="hp" required />
+                <input type="number" min="1" max="300" placeholder="attack" id="attack" required />
+                <input type="number" min="1" max="300" placeholder="special attack" id="special attack" required />
+                <input type="number" min="1" max="300" placeholder="defense" id="defense" required />
+                <input type="number" min="1" max="300" placeholder="special defense" id="special defense" required />
+                <input type="number" min="1" max="300" placeholder="speed" id="speed" required />
+                <input type="text" placeholder="link image" id="imgURL" onchange="javascript:changeIMG()" required />
+                <img id="linkCreatorImg" alt="no image"/><br>
+                <select name="type1" id="type1" form="creatorForm" aria-placeholder="type 1">
                     <option value="steel">steel</option>
                     <option value="water">water</option>
                     <option value="bug">bug</option>
@@ -43,7 +44,7 @@
                     <option value="flying">flying</option>
                     <option value="fairy">fairy</option>
                 </select>
-                <select name="type2" id="type2" form="pokemonFilter" aria-placeholder="type 2">
+                <select name="type2" id="type2" form="creatorForm" aria-placeholder="type 2">
                     <option value="none">none</option>
                     <option value="steel">steel</option>
                     <option value="water">water</option>
@@ -64,7 +65,7 @@
                     <option value="flying">flying</option>
                     <option value="fairy">fairy</option>
                 </select>
-                <button>Create</button>
+                <button type="submit">Create</button>
             </form>
         </div>
     </div>

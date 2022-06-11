@@ -94,7 +94,7 @@ public class DBManagement {
     }
 
     /*Returns only one row*/
-    public static Pokemon selectOne(int number) {
+    public static Pokemon selectOne(String number) {
         Pokemon pokemon = null;
         String command = "SELECT * FROM pokecircle.pokemon WHERE number = " + number + ";";
         try {
@@ -139,7 +139,7 @@ public class DBManagement {
     /*Updates a pokemon*/
     public static boolean update(Pokemon pokemon) {
         boolean correct = true;
-        if (selectOne(pokemon.getNumber()) != null) {
+        if (selectOne(Integer.toString(pokemon.getNumber())) != null) {
             String command = "UPDATE pokecircle.pokemon SET name = '" + pokemon.getName() + "', type1 = '" + pokemon.getType1() + "', type2 = '" + pokemon.getType2() +
             "', weight = " + pokemon.getWeight() + ", height = " + pokemon.getHeight() + ", image = '" + pokemon.getImage() + "', hp = " + pokemon.getHp() +
             ", attack = " + pokemon.getAttack() + ", sp_attack = " + pokemon.getSp_attack() + ", defense = " + pokemon.getDefense() +
@@ -163,7 +163,7 @@ public class DBManagement {
     /*Deletes a pokemon*/
     public static boolean delete(int number){
         boolean correct = true;
-        if (selectOne(number) != null) {
+        if (selectOne(Integer.toString(number)) != null) {
             String command = "DELETE FROM pokecircle.pokemon WHERE number = " + number + ";";
             try {
                 Statement st = connection.createStatement();

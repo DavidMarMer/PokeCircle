@@ -42,11 +42,12 @@ package com.pokecirlce.PokeCircle;
         this.author = author;
     }
 
-    /*Tramsform a Pokemon into a String*/
-    @Override
-    public String toString() {
-        return "{" + number + "," + name + "," + type1 + "," + type2 + "," + weight + "," + height + "," + image + "," + hp + "," +
-            attack + "," + sp_attack + "," + defense + "," + sp_defense + "," + speed + "," + likes + "," + author + "}";
+    /*Tramsform a Pokemon into a JSON*/
+    public String toJSON() {
+        return "{\"number\":\"" + number + "\",\"name\":\"" + name + "\",\"type1\":\"" + type1 + "\",\"type2\":\"" +
+            type2 +"\",\"weigth\":\"" + weight + "\",\"height\":\"" + height + "\",\"image\":\"" + image + "\",\"hp\":\"" +
+            hp + "\",\"attack\":\"" + attack + "\",\"sp_attack\":\"" + sp_attack + "\",\"defense\":\"" + defense + "\",\"sp_defense\":\"" +
+            sp_defense + "\",\"speed\":\"" + speed + "\",\"likes\":\"" + likes + "\",\"author\":\"" + author + "\"}";
     }
 
     /*Getters*/

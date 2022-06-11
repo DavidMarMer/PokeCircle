@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PokeCircle {
 
     /*Connects to database*/
-    //@GetMapping("/createDatabaseConnection")
     public static Boolean createDatabaseConnection() {
         return DBManagement.createConnection();
     }
 
     /*Disconnects from database*/
-    //@GetMapping("/closeDatabaseConnection")
     public static boolean closeDatabaseConnection() {
         return DBManagement.closeConnection();
     }
@@ -72,7 +70,7 @@ public class PokeCircle {
     @ResponseBody
     public static String selectOne(@PathVariable int number) {
         createDatabaseConnection();
-        return ((Pokemon)DBManagement.selectOne(number)).toString();
+        return ((Pokemon)DBManagement.selectOne(Integer.toString(number))).toJSON();
     }
 
     /*Selects pokemons from PokeCircle database applying HTML filter*/
@@ -89,6 +87,12 @@ public class PokeCircle {
         return pokemonListToJson(DBManagement.select("number = " + number + " AND UPPER(name) LIKE UPPER('" + name + "%') AND UPPER(author) LIKE UPPER('" + author + "%') AND UPPER(type1) = UPPER('" + type1 + "') AND UPPER(type2) = UPPER('" + type2 + "')"));
     }
 
+    @GetMapping("/selectLastPokemon")
+    public static String selectLastPokemon() {
+        createDatabaseConnection();
+        return ((Pokemon)DBManagement.selectOne("(SELECT MAX(number) FROM pokecircle.pokemon)")).toJSON();
+    }
+
     /*Updates a pokemon from PokeCircle database*/
     @GetMapping("/update/{strPokemon}")
     @ResponseBody
@@ -102,7 +106,7 @@ public class PokeCircle {
     @ResponseBody
     public static boolean addLike(@PathVariable int number) {
         createDatabaseConnection();
-        Pokemon pokemon = DBManagement.selectOne(number);
+        Pokemon pokemon = DBManagement.selectOne(Integer.toString(number));
         pokemon.setLikes(pokemon.getLikes() + 1);
         return DBManagement.update(pokemon);
     }
@@ -112,7 +116,7 @@ public class PokeCircle {
     @ResponseBody
     public static boolean removeLike(@PathVariable int number) {
         createDatabaseConnection();
-        Pokemon pokemon = DBManagement.selectOne(number);
+        Pokemon pokemon = DBManagement.selectOne(Integer.toString(number));
         pokemon.setLikes(pokemon.getLikes() - 1);
         return DBManagement.update(pokemon);
     }
@@ -127,7 +131,8 @@ public class PokeCircle {
 
     /*Converts a String into a Pokemon*/
     private static Pokemon stringToPokemon(String strPokemon) {
-        String[] attributesList = strPokemon.substring(strPokemon.indexOf("{")+1, strPokemon.indexOf("}")).split(",");
+        // String[] attributesList = strPokemon.substring(strPokemon.indexOf("{")+1, strPokemon.indexOf("}")).split(",");
+        String[] attributesList = strPokemon.split(",");
         int number = Integer.parseInt(attributesList[0]);
         String name = attributesList[1];
         String type1 = attributesList[2];
@@ -151,7 +156,7 @@ public class PokeCircle {
     private static String pokemonListToJson(List<Pokemon> pokemons) {
         String json = "[";
         for (Pokemon pokemon : pokemons) {
-            json += pokemon.toString() + ",";
+            json += pokemon.toJSON() + ",";
         }
         if (json.length() > 1) {
             json = json.substring(0, json.length()-1);
