@@ -151,6 +151,7 @@ function showOfficialPokemons() {
         let pokemons = jsonToPokemon(httpRequest.responseText);
         /*Pokemons targets auto-generator*/
         let pokemon_cards_container = document.getElementById('pokemon_cards_container');
+        pokemon_cards_container.innerHTML = '';
         for (let pkmNumber = 0; pkmNumber < pokemons.length; pkmNumber++) {
             let pokemon = pokemons[pkmNumber];
 
@@ -194,11 +195,14 @@ function showOfficialPokemons() {
             pokemon_card.appendChild(like);
             let like_button = document.createElement('button');
             like_button.setAttribute('class', 'like_button');
+            like_button.setAttribute('id', 'like_button_' + pokemon.number);
+            like_button.setAttribute('onclick', 'javascript:addLike(' + pokemon.number + ')');
             like_button.innerHTML = '♥';
             like.appendChild(like_button);
 
             let total_likes = document.createElement('total_likes');
             total_likes.setAttribute('class', 'total_likes');
+            total_likes.setAttribute('id', 'total_likes_' + pokemon.number);
             total_likes.innerHTML = pokemon.likes + '♥';
             pokemon_card.appendChild(total_likes);
         }
@@ -225,12 +229,13 @@ function insertPokemon(pokemon) {
     }, 1000);
 }
 
+/*Adds a like to a Pokemon*/
 function addLike(pkmNumber) {
     updateBakend('addLike/' + pkmNumber);
-}
+    let likes = document.getElementById('total_likes_' + pkmNumber).innerHTML;
+    document.getElementById('total_likes_' + pkmNumber).innerHTML = parseInt(likes.slice(0, -1))+1 + '♥';
 
-function removeLike(pkmNumber) {
-    updateBakend('removeLike/' + pkmNumber);
+    document.getElementById('like_button_' + pkmNumber).disabled = true;
 }
 
 /*Pokemon class*/
