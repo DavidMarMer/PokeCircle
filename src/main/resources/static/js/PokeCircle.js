@@ -76,7 +76,7 @@ function updateBakend(method) {
     httpRequest.send();
     httpRequest.onload = function() {
         console.log('Update', httpRequest.responseText);
-        localStorage.setItem('update', false);
+        localStorage.setItem('update', httpRequest.responseText);
     }
 }
 
@@ -160,7 +160,7 @@ function showOfficialPokemons() {
 
             let a_pokemon_name = document.createElement('a');
             a_pokemon_name.setAttribute('class', 'redirectInfoPokemon');
-            a_pokemon_name.setAttribute('href', 'info.html' + pokemon.number);
+            a_pokemon_name.setAttribute('href', 'info.html?number=' + pokemon.number);
             pokemon_card.appendChild(a_pokemon_name);
             let pokemon_name = document.createElement('h2');
             pokemon_name.setAttribute('class', 'pokemon_name');
@@ -169,7 +169,7 @@ function showOfficialPokemons() {
 
             let a_pokemon_img = document.createElement('a');
             a_pokemon_img.setAttribute('class', 'redirectInfoPokemon');
-            a_pokemon_img.setAttribute('href', 'info.html' + pokemon.number);
+            a_pokemon_img.setAttribute('href', 'info.html?number=' + pokemon.number);
             pokemon_card.appendChild(a_pokemon_img);
             let pokemon_img = document.createElement('img');
             pokemon_img.setAttribute('class', 'pokemon_img');
@@ -197,32 +197,11 @@ function showOfficialPokemons() {
             like_button.innerHTML = '♥';
             like.appendChild(like_button);
 
-
             let total_likes = document.createElement('total_likes');
             total_likes.setAttribute('class', 'total_likes');
             total_likes.innerHTML = pokemon.likes + '♥';
             pokemon_card.appendChild(total_likes);
         }
-    // <div id="pokemon_cards_container">
-    //     <div class="pokemon_card">
-    //         <a href="/pokemon/1" class="redirectInfoPokemon">
-    //             <h2 class="pokemon_name">BULBASAUR</h2>
-    //         </a>
-    //         <a href="/pokemon/1" class="redirectInfoPokemon">
-    //             <img class="pokemon_img"
-    //                 src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-    //                 alt="no image">
-    //         </a>
-    //         <div class="pokemon_data">
-    //             <label class="num">#1</label>
-    //             <label class="types">GRASS - POISON</label>
-    //         </div>
-    //         <div class="like">
-    //             <button class="like_button">♥</button>
-    //         </div>
-    //         <label class="total_likes">34♥</label>
-    //     </div>
-    // </div>
     }
 }
 
@@ -239,10 +218,11 @@ function insertPokemon(pokemon) {
     setTimeout(() => {
         if (localStorage.getItem('update') == 'true') {
             alert('New Pokemon created');
+            window.location.href = 'index.html';
         } else {
             alert("Error creating Pokemon. Maybe other Pokemon doesn't have the same name or image url");
         }
-    }, 1);
+    }, 1000);
 }
 
 function addLike(pkmNumber) {
