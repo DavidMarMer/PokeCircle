@@ -131,7 +131,6 @@ public class PokeCircle {
 
     /*Converts a String into a Pokemon*/
     private static Pokemon stringToPokemon(String strPokemon) {
-        // String[] attributesList = strPokemon.substring(strPokemon.indexOf("{")+1, strPokemon.indexOf("}")).split(",");
         String[] attributesList = strPokemon.split(",");
         int number = Integer.parseInt(attributesList[0]);
         String name = attributesList[1];
@@ -139,7 +138,7 @@ public class PokeCircle {
         String type2 = attributesList[3];
         float weight = Float.parseFloat(attributesList[4]);
         float height = Float.parseFloat(attributesList[5]);
-        String image = attributesList[6];
+        String image = attributesList[6].replaceAll("-7bs-", "/");
         short hp = Short.parseShort(attributesList[7]);
         short attack = Short.parseShort(attributesList[8]);
         short sp_attack = Short.parseShort(attributesList[9]);

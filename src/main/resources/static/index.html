@@ -10,9 +10,9 @@
     <title>PokeCircle</title>
 </head>
 
-<body background="img/background_login.jpg">
+<body background="img/background_login.jpg" onload="javascript:loadMainPage()">
     <div class="menu">
-        <img class="logo" src="img/logo.png" alt="logo">
+        <a href="index.html"><img class="logo" src="img/logo.png" alt="logo"></a>
         <div class="filters">
             <div>
                 <select class="selectFil">
@@ -91,8 +91,9 @@
         </div>
         <div>
             <form class="search">
-                <input class="input" id="input_pokemon_name" name="name" type="text" placeholder="Search by name..." autocomplete="off">
-                <input type="image" width="30px" src="img/search.png" class="imgSearch">
+                <input class="input" id="input_pokemon_name" name="name" type="text" placeholder="Search by name..."
+                    autocomplete="off">
+                <input type="image" width="30px" src="img/search.png" id="imgSearch">
             </form>
         </div>
         <div>
@@ -102,31 +103,27 @@
             </a>
         </div>
     </div>
-    <script src="js/PokeCircle.js"></script>
-    <div class="Pokemons_pokemons_card__1ioFa">
-            <div class="Pokemon_poke_container__FwTZC Pokemon_grass__22DyB">
-                <a href="/pokemon/1">
-                    <h2 class="Pokemon_pokemon_name__1bNtv Pokemon_with_border__3kiKL">BULBASAUR</h2>
-                </a>
-                <a href="/pokemon/1">
-                    <img class="Pokemon_poke_img__3c_lA"
-                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-                        alt="pokemon">
-                </a>
-                <div class="Pokemon_pokemon_stats__2hKRG">
-                    <label id="num"> #1</label>
-                    <label> GRASS - POISON</label>
-                </div>
-                <div class="like">
-                    <button class="Pokemon_pokemon_types__1Q59I  Pokemon_type_grass__2CjEk">
-                        <p class="Pokemon_with_border__3kiKL">♥</p>
-                    </button>   
-                </div>
-                <label id="likes"> 34♥</label>
-                
+    <div id="pokemon_cards_container">
+        <!-- <div class="pokemon_card">
+            <a href="/pokemon/1" class="redirectInfoPokemon">
+                <h2 class="pokemon_name">BULBASAUR</h2>
+            </a>
+            <a href="/pokemon/1" class="redirectInfoPokemon">
+                <img class="pokemon_img"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+                    alt="pokemon">
+            </a>
+            <div class="pokemon_data">
+                <label class="num">#1</label>
+                <label class="types">GRASS - POISON</label>
             </div>
+            <div class="like">
+                <button class="like_button">♥</button>
+            </div>
+            <label class="total_likes">34♥</label>
+        </div> -->
     </div>
-    </div>
+    <script src="js/PokeCircle.js"></script>
     <!--<div>
         <ul class="Paginate_page_numbers__1iAIr"><button name="decrement"
                 class="Paginate_single_pager__1T0iA">&lt;</button>

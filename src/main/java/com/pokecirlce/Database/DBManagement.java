@@ -87,7 +87,6 @@ public class DBManagement {
             st.executeUpdate(command);
         } catch (SQLException sqle) {
             System.err.println("Error inserting into the database:");
-            System.out.println(sqle.getMessage());
             correct = false;
         }
         return correct;
