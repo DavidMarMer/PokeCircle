@@ -82,7 +82,6 @@ function updateBakend(method) {
 
 function loadMainPage() {
     showOfficialPokemons();
-
     let submitButton = document.getElementById('imgSearch');
     /*Select called when filter applied*/
     submitButton.addEventListener('click', function() {
@@ -101,9 +100,13 @@ function loadMainPage() {
         if (authorText == '') {
             authorText = '""';
         }
-
         showFilterPokemons(nameText, numberText, authorText, type1Text, type2Text);
     });
+}
+
+function loadInfoPage() {
+    // let pkmNumToSearch = new URLSearchParams(window.location.search).get('number');
+    showPokemonInfo(new URLSearchParams(window.location.search).get('number'));
 }
 
 function changeIMG() {
@@ -131,6 +134,60 @@ function createPokemon() {
         let type2 = document.getElementById('type2').value;
         
         insertPokemon(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, 0, localStorage.getItem('username')));
+    }
+}
+
+function showPokemonInfo(number) {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectOne/' + number);
+    httpRequest.send();
+    httpRequest.onload = function() {
+        console.log('selectFilterPokemons', jsonToPokemon(httpRequest.responseText));
+        let pokemon = jsonToPokemon(httpRequest.responseText);
+
+        let name_value = document.getElementById('pokemon_name');
+        let number_value = document.getElementById('numero');
+        let img_value = document.getElementById('pokemon_img_info');
+        let attack_value = document.getElementsByClassName('attack_value');
+        let sp_attack_value = document.getElementsByClassName('sp_attack_value');
+        let defense_value = document.getElementsByClassName('defense_value');
+        let sp_defense_value = document.getElementsByClassName('sp_defense_value');
+        let hp_value = document.getElementsByClassName('hp_value');
+        let speed_value = document.getElementsByClassName('speed_value');
+        let info_stats = document.getElementsByClassName('info_stats');
+        
+        name_value.innerHTML = pokemon.name.toUpperCase();
+        number_value.innerHTML = '#' + pokemon.number;
+        console.log(img_value);
+        img_value.setAttribute('src', pokemon.image);
+        console.log(img_value);
+
+        attack_value[0].setAttribute('value', pokemon.attack);
+        attack_value[1].innerHTML = pokemon.attack;
+
+        sp_attack_value[0].setAttribute('value', pokemon.sp_attack);
+        sp_attack_value[1].innerHTML = pokemon.sp_attack;
+        
+        defense_value[0].setAttribute('value', pokemon.defense);
+        defense_value[1].innerHTML = pokemon.defense;
+
+        sp_defense_value[0].setAttribute('value', pokemon.sp_defense);
+        sp_defense_value[1].innerHTML = pokemon.sp_defense;
+
+        hp_value[0].setAttribute('value', pokemon.hp);
+        hp_value[1].innerHTML = pokemon.hp;
+
+        speed_value[0].setAttribute('value', pokemon.speed);
+        speed_value[1].innerHTML = pokemon.speed;
+
+        if (pokemon.type2 != '') {
+            info_stats[0].innerHTML = pokemon.type1 + ' - ' + pokemon.type2;
+        } else {
+            info_stats[0].innerHTML = pokemon.type1;
+        }
+        info_stats[1].innerHTML = 'WEIGHT: ' + pokemon.weight;
+        info_stats[2].innerHTML = 'HEIGHT: ' + pokemon.height;
+        info_stats[3].innerHTML = 'LIKES: ' + pokemon.likes;
     }
 }
 
@@ -187,7 +244,12 @@ function showOfficialPokemons() {
             pokemon_data.appendChild(num);
             let types = document.createElement('label');
             types.setAttribute('class', 'types');
-            types.innerHTML = (pokemon.type1 + ' - ' + pokemon.type2).toUpperCase();
+            console.log(typeof pokemon.type2, pokemon.type2);
+            if (pokemon.type2 != '') {
+                types.innerHTML = (pokemon.type1 + ' - ' + pokemon.type2).toUpperCase();
+            } else {
+                types.innerHTML = pokemon.type1.toUpperCase();
+            }
             pokemon_data.appendChild(types);
 
             let like = document.createElement('div');
@@ -287,7 +349,3 @@ function jsonToPokemon(json) {
         return pkmList;
     }
 }
-
-// var pokemon =  new Pokemon(1, 'Pikachu', 'electric', 'none', 1, 1, 'img', 1, 1, 1, 1, 1, 1, 0, 'Nintendo');
-// console.log(jsonToPokemon('[{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}]'));
-// console.log(jsonToPokemon('[{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"},{"number":1,"name":"Pikachu","type1":"electric","type2":"none","weight":1,"height":1,"image":"img","hp":1,"attack":1,"sp_attack":1,"defense":1,"sp_defense":1,"speed":1,"likes":0,"author":"Nintendo"}]'));

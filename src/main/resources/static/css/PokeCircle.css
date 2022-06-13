@@ -254,7 +254,7 @@ table {
     caret-color: #000;
 }
 
-.numero {
+#numero {
     font-weight: bolder;
     margin: 0;
     color: #9c9a9a;
@@ -293,7 +293,7 @@ table {
     text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
 }
 
-.DetailPokemon_stat_group__1BaaX>div>label {
+.stat_group>div>label {
     background-color: #ab0303;
     border-radius: 50%;
     padding: 5px 7px;
@@ -324,7 +324,7 @@ table {
     text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
 }
 
-.DetailPokemon_pokemon_stats__3Y9Ei {
+.stat_groups {
     padding: 3rem 2rem;
     border: 1px solid #000;
     border-radius: 0 0 3rem 3rem;
@@ -337,14 +337,14 @@ table {
     row-gap: 1rem;
 }
 
-.DetailPokemon_stat_group__1BaaX {
+.stat_group {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content:center;
 }
 
-.DetailPokemon_stat_title__1Bilj {
+.stat_title {
     width: 0.15rem;
     flex-grow: 0.3;
     margin: 5px;
@@ -403,7 +403,7 @@ h2 {
     align-self: center;
 }
 
-.pokemon_img_info {
+#pokemon_img_info {
     width: 300px;
     max-height: 300px;
     align-self: center;

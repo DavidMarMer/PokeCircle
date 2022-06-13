@@ -45,7 +45,7 @@ package com.pokecirlce.PokeCircle;
     /*Tramsform a Pokemon into a JSON*/
     public String toJSON() {
         return "{\"number\":\"" + number + "\",\"name\":\"" + name + "\",\"type1\":\"" + type1 + "\",\"type2\":\"" +
-            type2 +"\",\"weigth\":\"" + weight + "\",\"height\":\"" + height + "\",\"image\":\"" + image + "\",\"hp\":\"" +
+            type2 +"\",\"weight\":\"" + weight + "\",\"height\":\"" + height + "\",\"image\":\"" + image + "\",\"hp\":\"" +
             hp + "\",\"attack\":\"" + attack + "\",\"sp_attack\":\"" + sp_attack + "\",\"defense\":\"" + defense + "\",\"sp_defense\":\"" +
             sp_defense + "\",\"speed\":\"" + speed + "\",\"likes\":\"" + likes + "\",\"author\":\"" + author + "\"}";
     }

@@ -10,72 +10,68 @@
     <title>PokeCircle</title>
 </head>
 
-<body>
+<body onload="javascript:loadInfoPage()">
     <div class="App">
         <div class="pagInfo">
             <div class="recuadroInfo">
                 <a href="index.html"><img class="logo" src="img/logo.png" alt="logo"></a>
                 <div class="divNameImage">
                     <div>
-                        <h1 id="pokemon_name" class="nameDetails">
-                            POKEMON</h1>
-                        <p class="numero">#1</p>
+                        <h1 id="pokemon_name" class="nameDetails">POKEMON</h1>
+                        <p id="numero">#1</p>
                     </div>
-                    <img
-                        src="https://pokemon-the-wiki.herokuapp.com/pokemons/image/default-pokemon"
-                        alt="pokemon" class="pokemon_img_info">
+                    <img src="https://pokemon-the-wiki.herokuapp.com/pokemons/image/default-pokemon" alt="pokemon"
+                        id="pokemon_img_info">
                     <div class="circle"></div>
                 </div>
                 <div class="base_stats">
                     <div class="base_stats_north">Base stats</div>
-                    <div id="edit_pokemon_stats" class="DetailPokemon_pokemon_stats__3Y9Ei">
-                        <div class="DetailPokemon_stat_group__1BaaX">
-                            <p class="DetailPokemon_stat_title__1Bilj">Attack</p><progress max="255" value="49">49
-                            </progress>
-                            <div><label>49</label></div>
+                    <div id="edit_stat_groups" class="stat_groups">
+                        <div class="stat_group">
+                            <p class="stat_title">Attack</p>
+                            <progress class="attack_value" max="255" value="49"></progress>
+                            <div><label class="attack_value">49</label></div>
                         </div>
-                        <div class="DetailPokemon_stat_group__1BaaX">
-                            <p class="DetailPokemon_stat_title__1Bilj">Sp.Attack</p><progress max="255" value="100">100
-                            </progress>
-                            <div><label>49</label></div>
+                        <div class="stat_group">
+                            <p class="stat_title">Sp. Attack</p>
+                            <progress class="sp_attack_value" max="255" value="100"></progress>
+                            <div><label class="sp_attack_value">49</label></div>
                         </div>
-                        <div class="DetailPokemon_stat_group__1BaaX">
-                            <p class="DetailPokemon_stat_title__1Bilj">Defense</p><progress max="255" value="45">45
-                            </progress>
-                            <div><label>45</label></div>
+                        <div class="stat_group">
+                            <p class="stat_title">Defense</p>
+                            <progress class="defense_value" max="255" value="45"></progress>
+                            <div><label class="defense_value">45</label></div>
                         </div>
-                        <div class="DetailPokemon_stat_group__1BaaX">
-                            <p class="DetailPokemon_stat_title__1Bilj">Sp.Defense</p><progress max="255" value="45">45
-                            </progress>
-                            <div><label>45</label></div>
+                        <div class="stat_group">
+                            <p class="stat_title">Sp. Defense</p>
+                            <progress class="sp_defense_value" max="255" value="45"></progress>
+                            <div><label class="sp_defense_value">45</label></div>
                         </div>
-                        <div class="DetailPokemon_stat_group__1BaaX">
-                            <p class="DetailPokemon_stat_title__1Bilj">HP</p><progress max="255" value="170">170
-                            </progress>
-                            <div><label>49</label></div>
+                        <div class="stat_group">
+                            <p class="stat_title">HP</p>
+                            <progress class="hp_value" max="255" value="170"></progress>
+                            <div><label class="hp_value">49</label></div>
                         </div>
-                        <div class="DetailPokemon_stat_group__1BaaX">
-                            <p class="DetailPokemon_stat_title__1Bilj">Speed</p><progress max="255" value="49">49
-                            </progress>
-                            <div><label>49</label></div>
+                        <div id="attack" class="stat_group">
+                            <p class="stat_title">Speed</p>
+                            <progress class="speed_value" max="255" value="49"></progress>
+                            <div><label class="speed_value">49</label></div>
                         </div>
                     </div>
                     <div class="base_stats_sourth">
-                        <div class="info_stats">GRASS - POISON
-                        </div>
-                        <div class="info_stats">Weight: 6.9kg
-                        </div>
-                        <div class="info_stats">Height: 0.7m
-                        </div>
-                        <div class="info_stats">Likes: 9
-                        </div>
+                        <div id="stat_types" class="info_stats">GRASS - POISON</div>
+                        <div id="stat_weight" class="info_stats">Weight: 6.9kg</div>
+                        <div id="stat_height" class="info_stats">Height: 0.7m</div>
+                        <div id="stat_likes" class="info_stats">Likes: 9</div>
                     </div>
-                    <img class="DetailPokemon_trash_can__3aj7I" src="/static/media/trash_can.a0b6e21c.svg" alt="delete pokemon">
-                    <img id="edit_icon" class="DetailPokemon_edit_icon__JhYw-" src="/static/media/edit_icon.4eb48ab7.svg" alt="edit pokemon">
-                    <img id="save_icon" class="DetailPokemon_save_icon__ZDnUc" src="/static/media/save_icon.549d5e71.svg" alt="edit pokemon">
+                    <!-- <img class="DetailPokemon_trash_can__3aj7I" src="img/save.png" alt="save pokemon">
+                    <img id="edit_icon" class="DetailPokemon_edit_icon__JhYw-" src="img/edit.png" alt="edit pokemon">
+                    <img id="save_icon" class="DetailPokemon_save_icon__ZDnUc" src="img/delete.png" alt="delete pokemon"> -->
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/PokeCircle.js"></script>
 </body>
+
 </html>
