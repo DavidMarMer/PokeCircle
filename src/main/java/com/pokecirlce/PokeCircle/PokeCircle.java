@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class PokeCircle {
 
-    /*Connects to database*/
+    /* Connects to database */
     public static Boolean createDatabaseConnection() {
         return DBManagement.createConnection();
     }
 
-    /*Disconnects from database*/
+    /* Disconnects from database */
     public static boolean closeDatabaseConnection() {
         return DBManagement.closeConnection();
     }
 
-    /*Inserts a new pokemon into the PokeCircle database*/
+    /* Inserts a new pokemon into the PokeCircle database */
     @GetMapping("/insert/{strPokemon}")
     @ResponseBody
     public static boolean insert(@PathVariable String strPokemon) {
@@ -36,7 +36,10 @@ public class PokeCircle {
         return DBManagement.insert(stringToPokemon(strPokemon));
     }
 
-    /*Returns a json with all pokemons whose names match the first characters (namePart)*/
+    /*
+     * Returns a json with all pokemons whose names match the first characters
+     * (namePart)
+     */
     @GetMapping("/selectName/{namePart}")
     @ResponseBody
     public static String selectName(@PathVariable String namePart) {
@@ -47,7 +50,7 @@ public class PokeCircle {
             return pokemonListToJson(DBManagement.select("UPPER(name) LIKE UPPER('" + namePart + "%')"));
     }
 
-    /*Returns a json with all pokemons whose author is the one specified*/
+    /* Returns a json with all pokemons whose author is the one specified */
     @GetMapping("/selectAuthor/{author}")
     @ResponseBody
     public static String selectAuthor(@PathVariable String author) {
@@ -58,42 +61,86 @@ public class PokeCircle {
             return pokemonListToJson(DBManagement.select("UPPER(author) LIKE UPPER('" + author + "%')"));
     }
 
-    /*Selects all pokemons from PokeCircle database*/
+    /* Selects all pokemons from PokeCircle database */
     @GetMapping("/selectAll")
     public static String selectAll() {
         createDatabaseConnection();
         return pokemonListToJson(DBManagement.select(null));
     }
 
-    /*Selects one pokemon from PokeCircle database*/
+    /* Selects one pokemon from PokeCircle database */
     @GetMapping("/selectOne/{number}")
     @ResponseBody
     public static String selectOne(@PathVariable int number) {
         createDatabaseConnection();
-        return ((Pokemon)DBManagement.selectOne(Integer.toString(number))).toJSON();
+        return ((Pokemon) DBManagement.selectOne(Integer.toString(number))).toJSON();
     }
 
-    /*Selects pokemons from PokeCircle database applying HTML filter*/
-    @GetMapping("/selectFilter/{number}/{name}/{author}/{type1}/{type2}")
+    // /* Selects pokemons from PokeCircle database applying HTML filter */
+    // @GetMapping("/selectFilter/{name}/{author}/{type}/{order}/{stat_order}")
+    // @ResponseBody
+    // public static String selectFilter(@PathVariable("name") String name, @PathVariable("author") String author,
+    //         @PathVariable("type") String type, @PathVariable("order") String order,
+    //         @PathVariable("stat_order") String stat_order) {
+    //     createDatabaseConnection();
+    //     String authorCondition = "";
+    //     String typeCondition = "";
+
+    //     if (name.equals("''")) {
+    //         name = "";
+    //     }
+    //     if (author.equals("fans")) {
+    //         authorCondition = "AND author != 'Nintendo'";
+    //     } else if (!author.equals("''")) {
+    //         authorCondition = "AND UPPER(author) = UPPER('" + author + "')";
+    //     }
+    //     if (!type.equals("all types")) {
+    //         typeCondition = "AND UPPER(type1) = UPPER('" + type + "') OR UPPER(type2) = UPPER('" + type + "')";
+    //     }
+
+    //     return pokemonListToJson(DBManagement.select("number = " + number + " AND UPPER(name) LIKE UPPER('" + name
+    //             + "%') AND UPPER(author) LIKE UPPER('" + author + "%') AND UPPER(type1) = UPPER('" + type1
+    //             + "') AND UPPER(type2) = UPPER('" + type2 + "')"));
+    // }
+
+    /* Selects pokemons from PokeCircle database applying HTML filter */
+    @GetMapping("/selectFilter/{name}/{author}/{type}/{order}")
     @ResponseBody
-    public static String selectFilter(@PathVariable("number") int number, @PathVariable("name") String name, @PathVariable("author") String author, @PathVariable("type1") String type1, @PathVariable("type2") String type2) {
+    public static String selectFilter(@PathVariable("name") String name, @PathVariable("author") String author,
+            @PathVariable("type") String type, @PathVariable("order") String order) {
         createDatabaseConnection();
-        if (name == null || name == "''") {
+        String authorCondition = "";
+        String typeCondition = "";
+        String orderBy = " ORDER BY " + order + "";
+
+        if (name.equals("''"))
             name = "";
-        }
-        if (author == null || author.isEmpty() || author == "''") {
-            author = "Nintendo";
-        }
-        return pokemonListToJson(DBManagement.select("number = " + number + " AND UPPER(name) LIKE UPPER('" + name + "%') AND UPPER(author) LIKE UPPER('" + author + "%') AND UPPER(type1) = UPPER('" + type1 + "') AND UPPER(type2) = UPPER('" + type2 + "')"));
+            
+        if (author.equals("fans"))
+            authorCondition = "AND author != 'Nintendo'";
+        else if (!author.equals("undefined") && !author.equals("''"))
+            authorCondition = " AND UPPER(author) = UPPER('" + author + "')";
+
+        if (!type.equals("all_types"))
+            typeCondition = " AND UPPER(type1) = UPPER('" + type + "') OR UPPER(type2) = UPPER('" + type + "')";
+
+        if (order.equals("asc") || order.equals("desc"))
+            orderBy = " ORDER BY NAME " + order.toUpperCase();
+        else if (order.equals("number"))
+            orderBy = " ORDER BY " + order + " ASC";
+        else
+            orderBy = " ORDER BY " + order + " DESC";
+        
+        return pokemonListToJson(DBManagement.select("UPPER(name) LIKE UPPER('" + name + "%')" + authorCondition + typeCondition + orderBy));
     }
 
     @GetMapping("/selectLastPokemon")
     public static String selectLastPokemon() {
         createDatabaseConnection();
-        return ((Pokemon)DBManagement.selectOne("(SELECT MAX(number) FROM pokecircle.pokemon)")).toJSON();
+        return ((Pokemon) DBManagement.selectOne("(SELECT MAX(number) FROM pokecircle.pokemon)")).toJSON();
     }
 
-    /*Updates a pokemon from PokeCircle database*/
+    /* Updates a pokemon from PokeCircle database */
     @GetMapping("/update/{strPokemon}")
     @ResponseBody
     public static boolean update(@PathVariable String strPokemon) {
@@ -101,7 +148,7 @@ public class PokeCircle {
         return DBManagement.update(stringToPokemon(strPokemon));
     }
 
-    /*Adds a like to a pokemon from PokeCircle database*/
+    /* Adds a like to a pokemon from PokeCircle database */
     @GetMapping("/addLike/{number}")
     @ResponseBody
     public static boolean addLike(@PathVariable int number) {
@@ -111,7 +158,7 @@ public class PokeCircle {
         return DBManagement.update(pokemon);
     }
 
-    /*Removes a like from a pokemon from PokeCircle database*/
+    /* Removes a like from a pokemon from PokeCircle database */
     @GetMapping("/removeLike/{number}")
     @ResponseBody
     public static boolean removeLike(@PathVariable int number) {
@@ -121,7 +168,7 @@ public class PokeCircle {
         return DBManagement.update(pokemon);
     }
 
-    /*Deletes a pokemon from PokeCircle database*/
+    /* Deletes a pokemon from PokeCircle database */
     @GetMapping("/delete/{number}")
     @ResponseBody
     public static boolean delete(@PathVariable int number) {
@@ -129,7 +176,7 @@ public class PokeCircle {
         return DBManagement.delete(number);
     }
 
-    /*Converts a String into a Pokemon*/
+    /* Converts a String into a Pokemon */
     private static Pokemon stringToPokemon(String strPokemon) {
         String[] attributesList = strPokemon.split(",");
         int number = Integer.parseInt(attributesList[0]);
@@ -145,20 +192,22 @@ public class PokeCircle {
         short defense = Short.parseShort(attributesList[10]);
         short sp_defense = Short.parseShort(attributesList[11]);
         short speed = Short.parseShort(attributesList[12]);
-        int likes = Integer.parseInt(attributesList[13]);;
+        int likes = Integer.parseInt(attributesList[13]);
+        ;
         String author = attributesList[14];
 
-        return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author);
+        return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense,
+                sp_defense, speed, likes, author);
     }
 
-    /*Converts a Pokemons list into a json*/
+    /* Converts a Pokemons list into a json */
     private static String pokemonListToJson(List<Pokemon> pokemons) {
         String json = "[";
         for (Pokemon pokemon : pokemons) {
             json += pokemon.toJSON() + ",";
         }
         if (json.length() > 1) {
-            json = json.substring(0, json.length()-1);
+            json = json.substring(0, json.length() - 1);
         }
         json += "]";
         return json;
@@ -166,15 +215,17 @@ public class PokeCircle {
 
     @GetMapping("/createUser/{username}/{password}")
     @ResponseBody
-    public static boolean createUser(@PathVariable("username") String username, @PathVariable("password") String password) {
+    public static boolean createUser(@PathVariable("username") String username,
+            @PathVariable("password") String password) {
         createDatabaseConnection();
-        return DBManagement.createUser(username, password);
+        return DBManagement.createUser(username.toUpperCase(), password);
     }
 
     @GetMapping("/checkUser/{username}/{password}")
     @ResponseBody
-    public static boolean checkUser(@PathVariable("username") String username, @PathVariable("password") String password) {
+    public static boolean checkUser(@PathVariable("username") String username,
+            @PathVariable("password") String password) {
         createDatabaseConnection();
-        return DBManagement.checkUser(username, password);
+        return DBManagement.checkUser(username.toUpperCase(), password);
     }
 }

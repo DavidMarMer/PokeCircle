@@ -209,6 +209,12 @@ body {
 #imgSearch {
     width: 20px;
     height: 20px;
+    background: none;
+    border: none;
+}
+
+#imgSearch:hover {
+    cursor: pointer;
 }
 
 .pokeball1 {
@@ -385,6 +391,10 @@ table {
 
 .pokemon_name, a {
     font-family: "Fredoka",sans-serif;
+}
+
+.redirectInfoPokemon {
+    text-align: center;
 }
 
 h2 {

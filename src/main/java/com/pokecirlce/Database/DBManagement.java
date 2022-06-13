@@ -120,6 +120,7 @@ public class DBManagement {
             if (condition != null && !condition.isEmpty())
                 command += " WHERE " + condition;
             command += ";";
+
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(command);
             while (rs.next()) {
@@ -144,12 +145,14 @@ public class DBManagement {
             ", attack = " + pokemon.getAttack() + ", sp_attack = " + pokemon.getSp_attack() + ", defense = " + pokemon.getDefense() +
             ", sp_defense = " + pokemon.getSp_defense() + ", speed = " + pokemon.getSpeed() + ", likes = " + pokemon.getLikes() +
             ", author = '" + pokemon.getAuthor() + "' WHERE number = " + pokemon.getNumber() + ";";
+            System.out.println(command);
             try {
                 Statement st = connection.createStatement();
                 st.executeUpdate(command);
                 System.out.println("Pokemon updated");
             } catch (SQLException sqle) {
                 System.err.println("Error updating the pokemon");
+                sqle.printStackTrace();
                 correct = false;
             }
         } else {

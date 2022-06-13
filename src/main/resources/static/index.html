@@ -10,64 +10,39 @@
     <title>PokeCircle</title>
 </head>
 
-<body background="img/background_login.jpg" onload="javascript:loadMainPage()">
+<body background="img/background_login.jpg" onload="javascript:showOfficialPokemons()">
     <div class="menu">
         <a href="index.html"><img class="logo" src="img/logo.png" alt="logo"></a>
         <div class="filters">
             <div>
-                <select class="selectFil">
-                    <option>Name</option>
+                <select class="selectFil" onchange="javascript:showFilterPokemons()">
+                    <option value="number">Order By (Number)</option>
                     <option value="asc">A-Z</option>
                     <option value="desc">Z-A</option>
-                </select>
-            </div>
-            <div>
-                <select class="selectFil">
-                    <option>Order By (Number)</option>
-                    <option value="str">Strenght</option>
-                    <option value="health">Health</option>
-                    <option value="height">Height</option>
+                    <option value="type1">Type1</option>
+                    <option value="type2">Type2</option>
                     <option value="weight">Weight</option>
+                    <option value="height">Height</option>
+                    <option value="hp">HP</option>
                     <option value="attack">Attack</option>
-                    <option value="spAttack">Sp.Attack</option>
+                    <option value="sp_attack">Sp. Attack</option>
                     <option value="defense">Defense</option>
-                    <option value="spDefense">Sp.Defense</option>
+                    <option value="sp_defense">Sp. Defense</option>
+                    <option value="speed">speed</option>
                     <option value="likes">Likes</option>
                 </select>
             </div>
             <div>
-                <select class="selectFil">
-                    <option value="nintendo">Official</option>
-                    <option>All Authors</option>
+                <select class="selectFil" onchange="javascript:showFilterPokemons()">
+                    <option value="Nintendo">Officials</option>
+                    <option value="all_authors">All Authors</option>
                     <option value="fans">Fans</option>
                     <option value="you">You</option>
                 </select>
             </div>
             <div>
-                <select class="selectFil">
-                    <option value="all">All types</option>
-                    <option value="normal">Normal</option>
-                    <option value="nintendo">Nintendo</option>
-                    <option value="fighting">Fighting</option>
-                    <option value="flying">Flying</option>
-                    <option value="poison">Poison</option>
-                    <option value="rock">Rock</option>
-                    <option value="ground">Ground</option>
-                    <option value="bug">Bug</option>
-                    <option value="ghost">Ghost</option>
-                    <option value="steel">Steel</option>
-                    <option value="fire">Fire</option>
-                    <option value="water">Water</option>
-                    <option value="grass">Grass</option>
-                    <option value="ice">Ice</option>
-                    <option value="electric">Electric</option>
-                    <option value="psychic">Psychic</option>
-                    <option value="dragon">Dragon</option>
-                    <option value="fairy">Fairy</option>
-                    <option value="dark">Dark</option>
-                    <option value="unknown">Unknown</option>
-                    <option value="shadow">Shadow</option>
-                    <option value="none">none</option>
+                <select class="selectFil" onchange="javascript:showFilterPokemons()">
+                    <option value="all_types">All types</option>
                     <option value="steel">steel</option>
                     <option value="water">water</option>
                     <option value="bug">bug</option>
@@ -76,7 +51,7 @@
                     <option value="ghost">ghost</option>
                     <option value="fire">fire</option>
                     <option value="ice">ice</option>
-                    <option value="fight">fight</option>
+                    <option value="fighting">fighting</option>
                     <option value="normal">normal</option>
                     <option value="grass">grass</option>
                     <option value="psychic">psychic</option>
@@ -90,11 +65,10 @@
             </div>
         </div>
         <div>
-            <form class="search">
-                <input class="input" id="input_pokemon_name" name="name" type="text" placeholder="Search by name..."
-                    autocomplete="off">
-                <input type="image" width="30px" src="img/search.png" id="imgSearch">
-            </form>
+            <div class="search">
+                <input class="input" id="input_pokemon_name" id="name" type="text" placeholder="Search by name..." autocomplete="off">
+                <button type="submit" onclick="javascript:showFilterPokemons()" id="imgSearch"><img src="img/search.png" width="30px" id="imgSearch"/></button>
+            </div>
         </div>
         <div>
             <a class="createButton" href="creator.html">
@@ -124,17 +98,6 @@
         </div> -->
     </div>
     <script src="js/PokeCircle.js"></script>
-    <!--<div>
-        <ul class="Paginate_page_numbers__1iAIr"><button name="decrement"
-                class="Paginate_single_pager__1T0iA">&lt;</button>
-            <li><button class="Paginate_number__1-u0P">1</button></li>
-            <li><button class="Paginate_number__1-u0P">2</button></li>
-            <li><button class="Paginate_number__1-u0P">3</button></li>
-            <li><button class="Paginate_number__1-u0P">4</button></li>
-            <li><button class="Paginate_number__1-u0P">5</button></li><button name="increment"
-                class="Paginate_single_pager__1T0iA">&gt;</button>
-        </ul>
-    </div>-->
 </body>
 
 </html>

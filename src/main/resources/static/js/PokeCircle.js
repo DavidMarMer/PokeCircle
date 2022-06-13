@@ -80,69 +80,12 @@ function updateBakend(method) {
     }
 }
 
-function loadMainPage() {
-    showOfficialPokemons();
-    let submitButton = document.getElementById('imgSearch');
-    /*Select called when filter applied*/
-    submitButton.addEventListener('click', function() {
-        let nameText = document.getElementById('name').value;
-        let numberText = document.getElementById('number').value;
-        let authorText = document.getElementById('author').value;
-        let type1Text = document.getElementById('type1').value;
-        let type2Text = document.getElementById('type2').value;
-
-        if (numberText == '') {
-            numberText = '0';
-        }
-        if (nameText == '') {
-            nameText = '""';
-        }
-        if (authorText == '') {
-            authorText = '""';
-        }
-        showFilterPokemons(nameText, numberText, authorText, type1Text, type2Text);
-    });
-}
-
 function loadInfoPage() {
-    // let pkmNumToSearch = new URLSearchParams(window.location.search).get('number');
-    showPokemonInfo(new URLSearchParams(window.location.search).get('number'));
-}
-
-function changeIMG() {
-    let imgURL = document.getElementById('imgURL').value;
-    document.getElementById('linkCreatorImg').setAttribute('src', imgURL);
-}
-
-function createPokemon() {
     let httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', SPRINGBOOT_URL + 'selectLastPokemon');
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectOne/' + new URLSearchParams(window.location.search).get('number'));
     httpRequest.send();
     httpRequest.onload = function() {
-        let number = parseInt(jsonToPokemon(httpRequest.responseText).number) + 1;
-        let name = document.getElementById('name').value;
-        let height = parseFloat(document.getElementById('height').value);
-        let weight = document.getElementById('weight').value;
-        let hp = document.getElementById('hp').value;
-        let attack = parseInt(document.getElementById('attack').value);
-        let sp_attack = document.getElementById('special attack').value;
-        let defense = document.getElementById('defense').value;
-        let sp_defense = document.getElementById('special defense').value;
-        let speed = document.getElementById('speed').value;
-        let image = document.getElementById('imgURL').value;
-        let type1 = document.getElementById('type1').value;
-        let type2 = document.getElementById('type2').value;
-        
-        insertPokemon(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, 0, localStorage.getItem('username')));
-    }
-}
-
-function showPokemonInfo(number) {
-    let httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', SPRINGBOOT_URL + 'selectOne/' + number);
-    httpRequest.send();
-    httpRequest.onload = function() {
-        console.log('selectFilterPokemons', jsonToPokemon(httpRequest.responseText));
+        /*Pokemon info generator*/
         let pokemon = jsonToPokemon(httpRequest.responseText);
 
         let name_value = document.getElementById('pokemon_name');
@@ -158,9 +101,7 @@ function showPokemonInfo(number) {
         
         name_value.innerHTML = pokemon.name.toUpperCase();
         number_value.innerHTML = '#' + pokemon.number;
-        console.log(img_value);
         img_value.setAttribute('src', pokemon.image);
-        console.log(img_value);
 
         attack_value[0].setAttribute('value', pokemon.attack);
         attack_value[1].innerHTML = pokemon.attack;
@@ -191,12 +132,122 @@ function showPokemonInfo(number) {
     }
 }
 
-function showFilterPokemons(nameText, numberText, authorText, type1Text, type2Text) {
+function changeIMG() {
+    let imgURL = document.getElementById('imgURL').value;
+    document.getElementById('linkCreatorImg').setAttribute('src', imgURL);
+}
+
+function createPokemon() {
     let httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', SPRINGBOOT_URL + 'selectFilter/' + nameText + '/' + numberText + '/' + authorText + '/' + type1Text + '/' + type2Text);
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectLastPokemon');
     httpRequest.send();
     httpRequest.onload = function() {
-        console.log('selectFilterPokemons', httpRequest.responseText);
+        let number = parseInt(jsonToPokemon(httpRequest.responseText).number) + 1;
+        let name = document.getElementById('name').value;
+        let height = parseFloat(document.getElementById('height').value);
+        let weight = document.getElementById('weight').value;
+        let hp = document.getElementById('hp').value;
+        let attack = parseInt(document.getElementById('attack').value);
+        let sp_attack = document.getElementById('special attack').value;
+        let defense = document.getElementById('defense').value;
+        let sp_defense = document.getElementById('special defense').value;
+        let speed = document.getElementById('speed').value;
+        let image = document.getElementById('imgURL').value;
+        let type1 = document.getElementById('type1').value;
+        let type2 = document.getElementById('type2').value;
+        
+        insertPokemon(new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, 0, localStorage.getItem('username')));
+    }
+}
+
+/*Pokemons targets auto-generator*/
+function generatePokemonCards(pokemons) {
+    let pokemon_cards_container = document.getElementById('pokemon_cards_container');
+    pokemon_cards_container.innerHTML = '';
+    for (let pkmNumber = 0; pkmNumber < pokemons.length; pkmNumber++) {
+        let pokemon = pokemons[pkmNumber];
+
+        let pokemon_card = document.createElement('div');
+        pokemon_card.setAttribute('class', 'pokemon_card');
+        pokemon_cards_container.appendChild(pokemon_card);
+
+        let a_pokemon_name = document.createElement('a');
+        a_pokemon_name.setAttribute('class', 'redirectInfoPokemon');
+        a_pokemon_name.setAttribute('href', 'info.html?number=' + pokemon.number);
+        pokemon_card.appendChild(a_pokemon_name);
+        let pokemon_name = document.createElement('h2');
+        pokemon_name.setAttribute('class', 'pokemon_name');
+        pokemon_name.innerHTML = pokemon.name.toUpperCase();
+        a_pokemon_name.appendChild(pokemon_name);
+
+        let a_pokemon_img = document.createElement('a');
+        a_pokemon_img.setAttribute('class', 'redirectInfoPokemon');
+        a_pokemon_img.setAttribute('href', 'info.html?number=' + pokemon.number);
+        pokemon_card.appendChild(a_pokemon_img);
+        let pokemon_img = document.createElement('img');
+        pokemon_img.setAttribute('class', 'pokemon_img');
+        pokemon_img.setAttribute('src', pokemon.image);
+        pokemon_img.setAttribute('alt', 'no image');
+        a_pokemon_img.appendChild(pokemon_img);
+
+        let pokemon_data = document.createElement('div');
+        pokemon_data.setAttribute('class', 'pokemon_data');
+        pokemon_card.appendChild(pokemon_data);
+        let num = document.createElement('label');
+        num.setAttribute('class', 'num');
+        num.innerHTML = '#' + pokemon.number;
+        pokemon_data.appendChild(num);
+        let types = document.createElement('label');
+        types.setAttribute('class', 'types');
+        if (pokemon.type2 != '') {
+            types.innerHTML = (pokemon.type1 + ' - ' + pokemon.type2).toUpperCase();
+        } else {
+            types.innerHTML = pokemon.type1.toUpperCase();
+        }
+        pokemon_data.appendChild(types);
+
+        let like = document.createElement('div');
+        like.setAttribute('class', 'like');
+        pokemon_card.appendChild(like);
+        let like_button = document.createElement('button');
+        like_button.setAttribute('class', 'like_button');
+        like_button.setAttribute('id', 'like_button_' + pokemon.number);
+        like_button.setAttribute('onclick', 'javascript:addLike(' + pokemon.number + ')');
+        like_button.innerHTML = '♥';
+        like.appendChild(like_button);
+
+        let total_likes = document.createElement('total_likes');
+        total_likes.setAttribute('class', 'total_likes');
+        total_likes.setAttribute('id', 'total_likes_' + pokemon.number);
+        total_likes.innerHTML = pokemon.likes + '♥';
+        pokemon_card.appendChild(total_likes);
+    }
+}
+
+function showFilterPokemons() {
+    let filters = document.getElementsByClassName('selectFil');
+    let order = filters[0][filters[0].options.selectedIndex].value;
+    let authorFilter = filters[1][filters[1].options.selectedIndex].value;
+    let typeFilter = filters[2][filters[2].options.selectedIndex].value;
+
+    let nameText = document.getElementById('input_pokemon_name').value;
+    if (nameText == '') {
+        nameText = "''";
+    }
+    let authorText;
+    if (authorFilter == 'you') {
+        authorText = localStorage.getItem('username');
+    } else if (authorFilter == 'all_authors') {
+        authorText = "''";
+    } else {
+        authorText = authorFilter;
+    }
+
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', SPRINGBOOT_URL + 'selectFilter/' + nameText + '/' + authorText + '/' + typeFilter + '/' + order);
+    httpRequest.send();
+    httpRequest.onload = function() {
+        generatePokemonCards(jsonToPokemon(httpRequest.responseText));
     }
 }
 
@@ -205,69 +256,7 @@ function showOfficialPokemons() {
     httpRequest.open('GET', SPRINGBOOT_URL + 'selectAuthor/Nintendo');
     httpRequest.send();
     httpRequest.onload = function() {
-        let pokemons = jsonToPokemon(httpRequest.responseText);
-        /*Pokemons targets auto-generator*/
-        let pokemon_cards_container = document.getElementById('pokemon_cards_container');
-        pokemon_cards_container.innerHTML = '';
-        for (let pkmNumber = 0; pkmNumber < pokemons.length; pkmNumber++) {
-            let pokemon = pokemons[pkmNumber];
-
-            let pokemon_card = document.createElement('div');
-            pokemon_card.setAttribute('class', 'pokemon_card');
-            pokemon_cards_container.appendChild(pokemon_card);
-
-            let a_pokemon_name = document.createElement('a');
-            a_pokemon_name.setAttribute('class', 'redirectInfoPokemon');
-            a_pokemon_name.setAttribute('href', 'info.html?number=' + pokemon.number);
-            pokemon_card.appendChild(a_pokemon_name);
-            let pokemon_name = document.createElement('h2');
-            pokemon_name.setAttribute('class', 'pokemon_name');
-            pokemon_name.innerHTML = pokemon.name.toUpperCase();
-            a_pokemon_name.appendChild(pokemon_name);
-
-            let a_pokemon_img = document.createElement('a');
-            a_pokemon_img.setAttribute('class', 'redirectInfoPokemon');
-            a_pokemon_img.setAttribute('href', 'info.html?number=' + pokemon.number);
-            pokemon_card.appendChild(a_pokemon_img);
-            let pokemon_img = document.createElement('img');
-            pokemon_img.setAttribute('class', 'pokemon_img');
-            pokemon_img.setAttribute('src', pokemon.image);
-            pokemon_img.setAttribute('alt', 'no image');
-            a_pokemon_img.appendChild(pokemon_img);
-
-            let pokemon_data = document.createElement('div');
-            pokemon_data.setAttribute('class', 'pokemon_data');
-            pokemon_card.appendChild(pokemon_data);
-            let num = document.createElement('label');
-            num.setAttribute('class', 'num');
-            num.innerHTML = '#' + pokemon.number;
-            pokemon_data.appendChild(num);
-            let types = document.createElement('label');
-            types.setAttribute('class', 'types');
-            console.log(typeof pokemon.type2, pokemon.type2);
-            if (pokemon.type2 != '') {
-                types.innerHTML = (pokemon.type1 + ' - ' + pokemon.type2).toUpperCase();
-            } else {
-                types.innerHTML = pokemon.type1.toUpperCase();
-            }
-            pokemon_data.appendChild(types);
-
-            let like = document.createElement('div');
-            like.setAttribute('class', 'like');
-            pokemon_card.appendChild(like);
-            let like_button = document.createElement('button');
-            like_button.setAttribute('class', 'like_button');
-            like_button.setAttribute('id', 'like_button_' + pokemon.number);
-            like_button.setAttribute('onclick', 'javascript:addLike(' + pokemon.number + ')');
-            like_button.innerHTML = '♥';
-            like.appendChild(like_button);
-
-            let total_likes = document.createElement('total_likes');
-            total_likes.setAttribute('class', 'total_likes');
-            total_likes.setAttribute('id', 'total_likes_' + pokemon.number);
-            total_likes.innerHTML = pokemon.likes + '♥';
-            pokemon_card.appendChild(total_likes);
-        }
+        generatePokemonCards(jsonToPokemon(httpRequest.responseText));
     }
 }
 
@@ -302,7 +291,7 @@ function addLike(pkmNumber) {
 
 /*Pokemon class*/
 class Pokemon {
-    constructor(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author) {
+    constructor(number, name, type1, type2='none', weight, height, image, hp, attack, sp_attack, defense, sp_defense, speed, likes, author) {
         this.number = parseInt(number);
         this.name = name;
         this.type1 = type1;
