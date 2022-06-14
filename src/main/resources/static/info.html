@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Authors: María León Pérez and David Martínez Merencio -->
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +19,7 @@
                 <div class="divNameImage">
                     <div>
                         <h1 id="pokemon_name" class="nameDetails">POKEMON</h1>
-                        <p id="numero">#1</p>
+                        <p id="numero">#1 - Official</p>
                     </div>
                     <img src="https://pokemon-the-wiki.herokuapp.com/pokemons/image/default-pokemon" alt="pokemon"
                         id="pokemon_img_info">
@@ -64,9 +65,10 @@
                         <div id="stat_height" class="info_stats">Height: 0.7m</div>
                         <div id="stat_likes" class="info_stats">Likes: 9</div>
                     </div>
-                    <!-- <img class="DetailPokemon_trash_can__3aj7I" src="img/save.png" alt="save pokemon">
-                    <img id="edit_icon" class="DetailPokemon_edit_icon__JhYw-" src="img/edit.png" alt="edit pokemon">
-                    <img id="save_icon" class="DetailPokemon_save_icon__ZDnUc" src="img/delete.png" alt="delete pokemon"> -->
+                    <button class="modify_button" onclick="javascrcipt:deletePokemon()"><img class="img_delete"
+                            src="img/delete.png" alt="save pokemon"></button>
+                    <button class="modify_button" onclick="javascript:showUpdatePage()"><img class="img_edit"
+                            src="img/edit.png" alt="edit pokemon"></button>
                 </div>
             </div>
         </div>

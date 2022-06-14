@@ -76,33 +76,6 @@ public class PokeCircle {
         return ((Pokemon) DBManagement.selectOne(Integer.toString(number))).toJSON();
     }
 
-    // /* Selects pokemons from PokeCircle database applying HTML filter */
-    // @GetMapping("/selectFilter/{name}/{author}/{type}/{order}/{stat_order}")
-    // @ResponseBody
-    // public static String selectFilter(@PathVariable("name") String name, @PathVariable("author") String author,
-    //         @PathVariable("type") String type, @PathVariable("order") String order,
-    //         @PathVariable("stat_order") String stat_order) {
-    //     createDatabaseConnection();
-    //     String authorCondition = "";
-    //     String typeCondition = "";
-
-    //     if (name.equals("''")) {
-    //         name = "";
-    //     }
-    //     if (author.equals("fans")) {
-    //         authorCondition = "AND author != 'Nintendo'";
-    //     } else if (!author.equals("''")) {
-    //         authorCondition = "AND UPPER(author) = UPPER('" + author + "')";
-    //     }
-    //     if (!type.equals("all types")) {
-    //         typeCondition = "AND UPPER(type1) = UPPER('" + type + "') OR UPPER(type2) = UPPER('" + type + "')";
-    //     }
-
-    //     return pokemonListToJson(DBManagement.select("number = " + number + " AND UPPER(name) LIKE UPPER('" + name
-    //             + "%') AND UPPER(author) LIKE UPPER('" + author + "%') AND UPPER(type1) = UPPER('" + type1
-    //             + "') AND UPPER(type2) = UPPER('" + type2 + "')"));
-    // }
-
     /* Selects pokemons from PokeCircle database applying HTML filter */
     @GetMapping("/selectFilter/{name}/{author}/{type}/{order}")
     @ResponseBody
@@ -115,7 +88,7 @@ public class PokeCircle {
 
         if (name.equals("''"))
             name = "";
-            
+
         if (author.equals("fans"))
             authorCondition = "AND author != 'Nintendo'";
         else if (!author.equals("undefined") && !author.equals("''"))
@@ -130,8 +103,9 @@ public class PokeCircle {
             orderBy = " ORDER BY " + order + " ASC";
         else
             orderBy = " ORDER BY " + order + " DESC";
-        
-        return pokemonListToJson(DBManagement.select("UPPER(name) LIKE UPPER('" + name + "%')" + authorCondition + typeCondition + orderBy));
+
+        return pokemonListToJson(DBManagement
+                .select("UPPER(name) LIKE UPPER('" + name + "%')" + authorCondition + typeCondition + orderBy));
     }
 
     @GetMapping("/selectLastPokemon")

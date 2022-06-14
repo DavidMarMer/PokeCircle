@@ -4,7 +4,7 @@ package com.pokecirlce.PokeCircle;
  * Authors: David Martínez Merencio and María León Pérez
  */
 
- public class Pokemon {
+public class Pokemon {
 
     private int number;
     private String name;
@@ -22,9 +22,10 @@ package com.pokecirlce.PokeCircle;
     private int likes;
     private String author;
 
-    /*Constructor with all attributes*/
-    public Pokemon(int number, String name, String type1, String type2, float weight, float height, String image, short hp,
-        short attack, short sp_attack, short defense, short sp_defense, short speed, int likes, String author) {
+    /* Constructor with all attributes */
+    public Pokemon(int number, String name, String type1, String type2, float weight, float height, String image,
+            short hp,
+            short attack, short sp_attack, short defense, short sp_defense, short speed, int likes, String author) {
         this.number = number;
         this.name = name;
         this.type1 = type1;
@@ -42,15 +43,18 @@ package com.pokecirlce.PokeCircle;
         this.author = author;
     }
 
-    /*Tramsform a Pokemon into a JSON*/
+    /* Tramsform a Pokemon into a JSON */
     public String toJSON() {
         return "{\"number\":\"" + number + "\",\"name\":\"" + name + "\",\"type1\":\"" + type1 + "\",\"type2\":\"" +
-            type2 +"\",\"weight\":\"" + weight + "\",\"height\":\"" + height + "\",\"image\":\"" + image + "\",\"hp\":\"" +
-            hp + "\",\"attack\":\"" + attack + "\",\"sp_attack\":\"" + sp_attack + "\",\"defense\":\"" + defense + "\",\"sp_defense\":\"" +
-            sp_defense + "\",\"speed\":\"" + speed + "\",\"likes\":\"" + likes + "\",\"author\":\"" + author + "\"}";
+                type2 + "\",\"weight\":\"" + weight + "\",\"height\":\"" + height + "\",\"image\":\"" + image
+                + "\",\"hp\":\"" +
+                hp + "\",\"attack\":\"" + attack + "\",\"sp_attack\":\"" + sp_attack + "\",\"defense\":\"" + defense
+                + "\",\"sp_defense\":\"" +
+                sp_defense + "\",\"speed\":\"" + speed + "\",\"likes\":\"" + likes + "\",\"author\":\"" + author
+                + "\"}";
     }
 
-    /*Getters*/
+    /* Getters */
 
     public int getNumber() {
         return number;
@@ -112,7 +116,7 @@ package com.pokecirlce.PokeCircle;
         return author;
     }
 
-    /*Setters*/
+    /* Setters */
 
     public void setNumber(int number) {
         this.number = number;
@@ -173,4 +177,4 @@ package com.pokecirlce.PokeCircle;
     public void setAuthor(String author) {
         this.author = author;
     }
- }
+}

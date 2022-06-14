@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Authors: María León Pérez and David Martínez Merencio -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +10,12 @@
     <link href="css/PokeCircle.css" rel="stylesheet">
     <title>PokeCircle</title>
 </head>
-<body background="img/background_creator.jpg">
+
+<body background="img/background_creator.jpg" onload="changeIfUpdate()">
     <a href="index.html"><img class="logo" src="img/logo.png" alt="logo"></a>
     <div class="creator-page">
         <div class="form">
-            <h1>Create your Pokemon</h1>
+            <h1 id="creation_title">Create your pokemon</h1>
             <form id="creatorForm" autocomplete="off" action="javascript:createPokemon()">
                 <input type="text" placeholder="name" id="name" required />
                 <input type="number" min="1" max="300" step="any" placeholder="height" id="height" required />
@@ -24,7 +27,7 @@
                 <input type="number" min="1" max="300" placeholder="special defense" id="special defense" required />
                 <input type="number" min="1" max="300" placeholder="speed" id="speed" required />
                 <input type="text" placeholder="link image" id="imgURL" onchange="javascript:changeIMG()" required />
-                <img id="linkCreatorImg" alt="no image"/><br>
+                <img id="linkCreatorImg" alt="no image" /><br>
                 <select name="type1" id="type1" form="creatorForm" aria-placeholder="type 1">
                     <option value="steel">steel</option>
                     <option value="water">water</option>
@@ -34,7 +37,7 @@
                     <option value="ghost">ghost</option>
                     <option value="fire">fire</option>
                     <option value="ice">ice</option>
-                    <option value="fight">fight</option>
+                    <option value="fighting">fighting</option>
                     <option value="normal">normal</option>
                     <option value="grass">grass</option>
                     <option value="psychic">psychic</option>
@@ -55,7 +58,7 @@
                     <option value="ghost">ghost</option>
                     <option value="fire">fire</option>
                     <option value="ice">ice</option>
-                    <option value="fight">fight</option>
+                    <option value="fighting">fighting</option>
                     <option value="normal">normal</option>
                     <option value="grass">grass</option>
                     <option value="psychic">psychic</option>
@@ -66,10 +69,11 @@
                     <option value="flying">flying</option>
                     <option value="fairy">fairy</option>
                 </select>
-                <button type="submit">Create</button>
+                <button type="submit" id="creatorButton">Create</button>
             </form>
         </div>
     </div>
     <script src="js/PokeCircle.js"></script>
 </body>
+
 </html>

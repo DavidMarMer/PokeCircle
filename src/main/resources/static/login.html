@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Authors: María León Pérez and David Martínez Merencio -->
 
 <head>
     <meta charset="UTF-8">
@@ -14,15 +15,17 @@
     <div class="login-page">
         <div class="form">
             <form id="register-form" action="javascript:register()">
-                <input type="text" id="registerName" placeholder="username" required/>
-                <input type="password" id="registerPassword" placeholder="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
-                <input type="password" id="registerRepeatPassword" placeholder="repeat password" required/>
+                <input type="text" id="registerName" placeholder="username" required />
+                <input type="password" id="registerPassword" placeholder="password" required
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+                <input type="password" id="registerRepeatPassword" placeholder="repeat password" required />
                 <button type="submit">create account</button>
                 <p class="message">Already registered? <a href="#" id="swithToLogin">Sign In</a></p>
             </form>
             <form id="login-form" action="javascript:login()">
-                <input type="text" id="loginName" placeholder="username" required/>
-                <input type="password" id="loginPassword" placeholder="password" required/>
+                <input type="text" id="loginName" placeholder="username" required />
+                <input type="password" id="loginPassword" placeholder="password" required />
                 <button type="submit">login</button>
                 <p class="message">Not registered? <a href="#" id="swithToRegister">Create an account</a></p>
             </form>
