@@ -167,7 +167,6 @@ public class PokeCircle {
         short sp_defense = Short.parseShort(attributesList[11]);
         short speed = Short.parseShort(attributesList[12]);
         int likes = Integer.parseInt(attributesList[13]);
-        ;
         String author = attributesList[14];
 
         return new Pokemon(number, name, type1, type2, weight, height, image, hp, attack, sp_attack, defense,
